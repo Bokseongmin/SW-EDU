@@ -14,7 +14,7 @@
             /* left는 요소가 레이어여야 적용된다. postion */
             position: absolute;
             left: 0px;
-            transition: left 0.5s;
+            transition: all 1s;
         }
     </style>
 </head>
@@ -30,8 +30,28 @@
         var playBtn = document.getElementById("playBtn");
         var box = document.getElementById("box");
 
-        playBtn.onclick = function(event) {
-            box.style.left = "200px";
+        playBtn1.onclick = function(event) {
+            box.style.left="0px";
+            box.style.top="0px";
+            box.style.backgroundColor=colors[0];
+        }
+
+        playBtn2.onclick = function(event) {
+            box.style.left="0px";
+            box.style.top="200px";
+            box.style.backgroundColor=colors[1];
+        }
+
+        playBtn3.onclick = function(event) {
+            box.style.left="200px";
+            box.style.top="200px";
+            box.style.backgroundColor=colors[2];
+        }
+
+        playBtn4.onclick = function(event) {
+            box.style.left="200px";
+            box.style.top="0px";
+            box.style.backgroundColor=colors[3];
         }
     </script>
 </body>
