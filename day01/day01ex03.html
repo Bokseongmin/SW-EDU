@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 아래 요소를 클릭 하면 요소의 내용 값으로 배경 색 변경 -->
+    <ul type="circle">
+        <li>Red</li>
+        <li>Green</li>
+        <li>Blue</li>
+    </ul>
+    <script>
+        var ul = document.getElementsByTagName("ul")[0];
+        var colorNames = ul.getElementsByTagName("li");
+        for(var liTag of colorNames) {
+            //console.log(liTag);
+            liTag.onclick = function(event) {
+                // this는 객체 자신이다.
+                //console.log(this);
+                // == === != !==
+                // 자바스크립트는 this의 정체
+                //console.log(this === event.target);
+                //console.log(this.innerText);
+                var colorName =  this.innerText;
+                document.body.style.background = colorName;
+            }
+        }
+    </script>
+
+    <ol type="a" class="menu">
+        <li>title01</li>
+        <li>title02</li>
+        <li>title03</li>
+    </ol>
+<!--
+    <script>
+        // 문서 내의 모든 li요소를 선택해서 liList가 참조 하도록 한다.
+        // getElementsByClassName의 결과는 List이다.
+        var ulTag = document.getElementsByClassName("menu");
+        console.log(ulTag[0])
+        var liList = ulTag[0].getElementsByTagName("li");
+        console.log(liList[0]);
+        console.log(liList[1]);
+        console.log(liList[2]);
+        console.dir(liList);
+        // liList의 모든 요소에 이벤트 핸들러 한번에 추가
+        for(var i=0; i<liList.length; i++) {
+            console.log(liList[i]);
+            liList[i].onclick = function(event) {
+                console.log(event.target.innerText);
+            }
+        }
+    </script>
+-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            background-color : oldlace;
+        }
+
+        #heading {
+            color : gray;
+            background-color : aqua;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="heading"> Hello world</h1>
+    <h3 class="welcome">오신것을 환영합니다.</h3>
+
+    <script>
+        let h1Tag = document.getElementsById("heading");
+        console.log(h1Tag);
+        console.dir(h1Tag);
+    </script>
+</body>
+</html>
