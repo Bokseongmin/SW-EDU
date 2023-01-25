@@ -11,14 +11,28 @@
             height: 100px;
             background-color: yellow;
             border: 2px solid red;
-            /* left는 요소가 레이어야 적용된다. -> position */
-            left: 0px;
-            /* absolute 절대적 realative 형제요소 */
+            /* left는 요소가 레이어여야 적용된다. postion */
             position: absolute;
+            left: 0px;
+            transition: left 0.5s;
         }
     </style>
 </head>
 <body>
+    <button id="playBtn1">0,0</button>
+    <button id="playBtn2">0,200</button>
+    <button id="playBtn3">200,200</button>
+    <button id="playBtn4">200,0</button>
     <div id="box">Box</div>
+
+    <script>
+        var colors = ['blue','orange','brown','pink'];
+        var playBtn = document.getElementById("playBtn");
+        var box = document.getElementById("box");
+
+        playBtn.onclick = function(event) {
+            box.style.left = "200px";
+        }
+    </script>
 </body>
 </html>
