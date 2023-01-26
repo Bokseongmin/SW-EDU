@@ -27,22 +27,22 @@
         var resultBtn = document.querySelector("#resultBtn");
         var result = document.querySelector("#result");
         resultBtn.onclick = function(event) {
-            switch(oper) {
+            switch(oper.value) {
                 case "+":
-                    result.value = num1.value + num2.value;
-                    result.innerHTML = "결과 : " + result.value;
+                    result.innerHTML = "결과 : " + (parseInt(num1.value) + parseInt(num2.value));
                     break;
                 case "-":
-                    result.value = num1.value + num2.value;
-                    result.innerHTML = "결과 : " + (num1.value - num2.value);
+                    if(parseInt(num1.value) > parseInt(num2.value)) {
+                        result.innerHTML = "결과 : " + (parseInt(num1.value) - parseInt(num2.value));
+                    } else {
+                        result.innerHTML = "결과 : " + (parseInt(num2.value) - parseInt(num1.value));
+                    }
                     break;
                 case "*":
-                    result.value = num1.value + num2.value;
-                    result.innerHTML = "결과 : " + (num1.value * num2.value);
+                    result.innerHTML = "결과 : " + (parseInt(num1.value) * parseInt(num2.value));
                     break;
                 case "/":
-                    result.value = num1.value + num2.value;
-                    result.innerHTML = "결과 : " + (num1.value / num2.value);
+                    result.innerHTML = "결과 : " + (parseInt(num1.value) / parseInt(num2.value));
                     break;
             }
         }
