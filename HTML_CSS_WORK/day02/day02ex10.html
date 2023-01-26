@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>초등학교 저학년용 계산기</h1>
+    <p>결과는 음수가 나오지 않도록</p>
+    <input type="text" id="num1" value="5">
+    <select id="oper">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="text" id="num2" value="10">
+    <input type="button" id="resultBtn" value="확인">
+    <div id="result">결과 : </div>
+
+    <script>
+        var num1 = document.querySelector("#num1");
+        var num2 = document.querySelector("#num2");
+        var oper = document.querySelector("#oper");
+        var resultBtn = document.querySelector("#resultBtn");
+        var result = document.querySelector("#result");
+        resultBtn.onclick = function(event) {
+            switch(oper) {
+                case "+":
+                    result.value = num1.value + num2.value;
+                    result.innerHTML = "결과 : " + result.value;
+                    break;
+                case "-":
+                    result.value = num1.value + num2.value;
+                    result.innerHTML = "결과 : " + (num1.value - num2.value);
+                    break;
+                case "*":
+                    result.value = num1.value + num2.value;
+                    result.innerHTML = "결과 : " + (num1.value * num2.value);
+                    break;
+                case "/":
+                    result.value = num1.value + num2.value;
+                    result.innerHTML = "결과 : " + (num1.value / num2.value);
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
