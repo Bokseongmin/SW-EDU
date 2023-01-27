@@ -62,11 +62,13 @@
             // check버튼 이벤트 핸들러
             var checkBoxList = document.querySelectorAll(".checkDone");
             for(var i=0; i<checkBoxList.length; i++) {
+
+                // 콜백 함수
                 checkBoxList[i].onchange = function(event) {
-                    for(var i=0; i<todoList.length; i++) {
-                        console.log(todoList[i].no == this.dataset.no)
-                        if(todoList[i].no == this.dataset.no) {
-                            todoList[i].done = !todoList[i].done;
+                    for(var j=0; j<todoList.length; j++) {
+                        console.log(todoList[j].no == this.dataset.no)
+                        if(todoList[j].no == this.dataset.no) {
+                            todoList[j].done = !todoList[j].done;
                         }
                     }
                     // 주의 : 이벤트 발생 후 목록 다시 그리기.
