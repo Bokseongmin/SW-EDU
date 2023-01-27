@@ -53,17 +53,30 @@
                 var liTmpStr = `<li>
                     <input class="checkDone" data-no="${todo.no}" type="checkbox" ${todo.done?"checked":""}>
                     <span class="${todo.done?'del':''}">${todo.todo}</span>
-                    <button>삭제</button>
+                    <button class="delBtn" data-no="${todo.no}">삭제</button>
                 </li>`;
                 newLis += liTmpStr;
             }
             document.querySelector("#listArea").innerHTML = newLis;
 
+            // 삭제 버튼 구현
+            var delBtnList = document.querySelectorAll(".delBtn");
+            for(var i=0; i<delBtnList.length; i++) {
+                delBtnList[i].onclick = function(event) {
+                    console.log(event.target.dataset.no);
+                    var no = parseInt(event.target.dataset.no);
+                    for(var j=0; j<todoList.length; j++) {
+                        if(todoList[j].no == no) {
+                            todoList.splice(j, 1);
+                        }
+                    }
+                    drawList();
+                }
+            }
+
             // check버튼 이벤트 핸들러
             var checkBoxList = document.querySelectorAll(".checkDone");
             for(var i=0; i<checkBoxList.length; i++) {
-
-                // 콜백 함수
                 checkBoxList[i].onchange = function(event) {
                     for(var j=0; j<todoList.length; j++) {
                         console.log(todoList[j].no == this.dataset.no)
