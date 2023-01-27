@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<!-- inline > internal > external -->
+<body>
+    <div class="container">
+        <h1 style="background-color:red; color: yellow;">사원 목록</h1>
+        <p>검색 <input type="text" id="keyWord"> <button id="searchBtn">검색</button></p>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="allCheck"></th>
+                    <th>번호</th>
+                    <th>사진</th>
+                    <th>사원명</th>
+                    <th>부서</th>
+                    <th>직급</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody id="rows_area"></tbody>            
+        </table>
+    </div>
+
+    <script>
+        // Ajax 기법을 이용해서 비동기로 서버에서 data를 받아 오는 부분.
+        var saramList = [{
+            "no":1,
+            "img": "images/noimage.jpg",
+            "name":"홍길순",
+            "dept":"관리부",
+            "position":"과장"
+        },{
+            "no":2,
+            "img": "images/noimage.jpg",
+            "name":"김길순",
+            "dept":"생산부",
+            "position":"대리"
+        },{
+            "no":3,
+            "img": "images/noimage.jpg",
+            "name":"박길순",
+            "dept":"영업부",
+            "position":"부장"
+        },{
+            "no":4,
+            "img": "images/noimage.jpg",
+            "name":"홍길자",
+            "dept":"관리부",
+            "position":"부장"
+        },{
+            "no":5,
+            "img": "images/noimage.jpg",
+            "name":"김민호",
+            "dept":"생산부",
+            "position":"사원"
+        },{
+            "no":6,
+            "img": "images/noimage.jpg",
+            "name":"박민수",
+            "dept":"영업부",
+            "position":"대리"
+        }];
+
+        var newHtml = "";
+        for(var i=0; i<saramList.length; i++) {
+            var saram = saramList[i];
+            var tmpData = `<tr align="center">
+                <td><input type="checkbox" class="check"></td>
+                <td>${saram.no}</td>
+                <td><img src="${saram.img}" width="100"/></td>
+                <td>${saram.name}</td>
+                <td>${saram.dept}</td>
+                <td>${saram.position}</td>
+                <td><input type="button" value="수정"></td>
+                <td><input type="button" value="삭제"></td>
+            </tr>`;
+            newHtml += tmpData;
+        }
+        document.querySelector("#rows_area").innerHTML = newHtml;
+
+        // 검색 기능 구현 (의사 코드)
+        // 1. searchBtn을 클릭하면 keyword의 내용을 읽어온다.
+        // 2. keyword의 값과 같은 요소를 saramList에서 찾는다.
+        // 3. 그 결과를 목록에 출력한다.
+        var searchBtn = document.querySelector("#searchBtn");
+        var keyWordInput = document.querySelector("#keyWord");
+
+        
+        searchBtn.onclick = function(event) {
+            var newSaramList = [];
+            var keyword = keyWordInput.value;
+            for(var i=0; i<saramList.length; i++) {
+                if((saramList[i].name).indexOf(keyword) != -1) {
+                    newSaramList.push(saramList[i]);
+                }
+            }
+        
+            var newHtml = "";
+            for(var i=0; i<newSaramList.length; i++) {
+                var saram = newSaramList[i];
+                var tmpData = `<tr align="center">
+                    <td><input type="checkbox" class="check"></td>
+                    <td>${saram.no}</td>
+                    <td><img src="${saram.img}" width="100"/></td>
+                    <td>${saram.name}</td>
+                    <td>${saram.dept}</td>
+                    <td>${saram.position}</td>
+                    <td><input type="button" value="수정"></td>
+                    <td><input type="button" value="삭제"></td>
+                </tr>`;
+                newHtml += tmpData;
+            }
+            document.querySelector("#rows_area").innerHTML = newHtml;
+        } // end of searchBtn
+    </script>
+</body>
+</html>

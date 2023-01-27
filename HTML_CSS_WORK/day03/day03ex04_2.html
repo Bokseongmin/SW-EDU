@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<!-- inline > internal > external -->
+<body>
+    <div class="container">
+        <h1 style="background-color:red; color: yellow;">사원 목록</h1>
+        <p>검색 <input type="text" id="keyWord"> <button>검색</button></p>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="allCheck"></th>
+                    <th>번호</th>
+                    <th>사진</th>
+                    <th>사원명</th>
+                    <th>부서</th>
+                    <th>직급</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody id="rows_area"></tbody>            
+        </table>
+    </div>
+
+    <script>
+        // Ajax 기법을 이용해서 비동기로 서버에서 data를 받아 오는 부분.
+        var saramList = [{
+            "no":1,
+            "img": "images/noimage.jpg",
+            "name":"홍길순",
+            "dept":"관리부",
+            "position":"과장"
+        },{
+            "no":2,
+            "img": "images/noimage.jpg",
+            "name":"김길순",
+            "dept":"생산부",
+            "position":"대리"
+        },{
+            "no":3,
+            "img": "images/noimage.jpg",
+            "name":"박길순",
+            "dept":"영업부",
+            "position":"부장"
+        }];
+
+        var newHtml = "";
+        for(var i=0; i<saramList.length; i++) {
+            var saram = saramList[i];
+            var tmpData = `<tr align="center">
+                <td><input type="checkbox" class="check"></td>
+                <td>${saram.no}</td>
+                <td><img src="${saram.img}" width="100"/></td>
+                <td>${saram.name}</td>
+                <td>${saram.dept}</td>
+                <td>${saram.position}</td>
+                <td><input type="button" value="수정"></td>
+                <td><input type="button" value="삭제"></td>
+            </tr>`;
+            newHtml += tmpData;
+        }
+
+        console.log(newHtml);
+        document.querySelector("#rows_area").innerHTML = newHtml;
+    </script>
+</body>
+</html>

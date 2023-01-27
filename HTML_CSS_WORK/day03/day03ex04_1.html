@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<!-- inline > internal > external -->
+<body>
+    <div class="container">
+        <h1 style="background-color:red; color: yellow;">사원 목록</h1>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="allCheck"></th>
+                    <th>번호</th>
+                    <th>사진</th>
+                    <th>사원명</th>
+                    <th>부서</th>
+                    <th>직급</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody id="rows_area"></tbody>            
+        </table>
+    </div>
+
+    <script type="text/template" id="rowTemp">
+        <tr align="center">
+            <td><input type="checkbox" class="check"></td>
+            <td>${saram.no}</td>
+            <td><img src="${saram.img}" width="100"/></td>
+            <td>${saram.name}</td>
+            <td>${saram.dept}</td>
+            <td>${saram.position}</td>
+            <td><input type="button" value="수정"></td>
+            <td><input type="button" value="삭제"></td>
+        </tr>
+    </script>
+
+    <script>
+        var saram = {
+            "no":1,
+            "img": "images/noimage.jpg",
+            "name":"홍길순",
+            "dept":"관리부",
+            "position":"과장"
+        }
+
+        //var rowTmpStr = document.querySelector("#rowTemp").innerHTML;
+        var tmpData = `<tr align="center">
+            <td><input type="checkbox" class="check"></td>
+            <td>${saram.no}</td>
+            <td><img src="${saram.img}" width="100"/></td>
+            <td>${saram.name}</td>
+            <td>${saram.dept}</td>
+            <td>${saram.position}</td>
+            <td><input type="button" value="수정"></td>
+            <td><input type="button" value="삭제"></td>
+        </tr>`;
+
+        console.log(tmpData);
+        document.querySelector("#rows_area").innerHTML = tmpData;
+    </script>
+</body>
+</html>

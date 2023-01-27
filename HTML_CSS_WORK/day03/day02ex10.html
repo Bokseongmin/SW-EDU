@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>초등학교 저학년용 계산기</h1>
+    <p>결과는 음수가 나오지 않도록</p>
+    <input type="number" id="num1" value="5" size="3">
+    <select id="oper">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <!-- <input type="text" id="oper" value="+" size="3"> -->
+    <input type="number" id="num2" value="10" size="3">
+    <input type="button" id="resultBtn" value="확인">
+    <div id="result">결과 : </div>
+
+    <script>
+        var num1 = document.querySelector("#num1");
+        var num2 = document.querySelector("#num2");
+        var oper = document.querySelector("#oper");
+        var resultBtn = document.querySelector("#resultBtn");
+        var result = document.querySelector("#result");
+        resultBtn.onclick = function(event) {
+            // parseInt(num1) : 문자열 데이터를 정수 데이터로 변환
+            //var a = parseInt(num1.value);
+            // typeof : 데이터의 타입 확인
+            //console.log(typeof num1.value);
+            //console.log(a);
+            //console.log(typeof a);
+
+            // 첫번째 값의 유효성 검사
+            if(num1.value == "" || !num1.value) {
+                alert("첫번째 값을 입력하세요!");
+                num1.value = "";
+                num1.focus();
+                return;
+            }
+            if(isNaN(parseInt(num1.value))){
+                alert("첫번째 값이 숫자가 아닙니다! 다시 입력하세요.");
+                num1.value = "";
+                num1.focus();
+                return;
+            }
+            // 연산자 유효성 검사
+            if("+-*/".indexOf(oper.value) == -1) {
+                alert("연사자는 + - * / 중에 입력 하세요!");
+                oper.value = "";
+                oper.focus();
+                return;
+            }
+            // 두번째 값의 유효성 검사
+            if(num2.value == "" || !num2.value) {
+                alert("두번째 값을 입력하세요!");
+                num2.value = "";
+                num2.focus();
+                return;
+            }
+            if(isNaN(parseInt(num2.value))){
+                alert("두번째 값이 숫자가 아닙니다! 다시 입력하세요.");
+                num2.value = "";
+                num2.focus();
+                return;
+            }
+            //console.log('num1의 값 : ' + num1.value);
+            //console.log('num2의 값 : ' + num2.value);
+            var intNum1 = Number(num1.value);
+            var intNum2 = Number(num2.value);
+            console.log(num1.value + oper.value + num2.value);
+            var resultValue = Math.abs(eval(num1.value + oper.value + num2.value) );
+            /* if(oper.value === "+") {
+                resultValue = intNum1 + intNum2;
+            } else if(oper.value === "-") {
+                if(intNum1 < intNum2) {
+                    var tmp = intNum1;
+                    intNum1 = intNum2;
+                    intNum2 = tmp;
+                }
+                resultValue = intNum1 - intNum2;
+                resultValue = Math.abs(resultValue);
+            } else if(oper.value === "*") {
+                resultValue = intNum1 * intNum2;
+            } else if(oper.value === "/") {
+                resultValue = intNum1 / intNum2;
+            } */
+            console.log("result value : ", resultValue);
+            result.innerText = "결과 : " + resultValue;
+        }
+    </script>
+</body>
+</html>

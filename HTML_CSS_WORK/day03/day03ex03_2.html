@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <table id="tbl"></table>
+
+    <script>
+        var arr = [
+            {"no":1, "name":"홍길동", "부서":"관리부"},
+            {"no":2, "name":"김길동", "부서":"영업부"},
+            {"no":3, "name":"박길동", "부서":"관리부"},
+            {"no":4, "name":"최길동", "부서":"영업부"},
+            {"no":5, "name":"이길동", "부서":"검사부"},
+            {"no":6, "name":"정길동", "부서":"관리부"}
+        ];
+
+        var tbl = document.getElementById("tbl");
+        var htmlStr = "";
+        for(var i=0; i<arr.length; i++) {
+            var saram = arr[i];
+            // 빽틱 - 템플릿 문자열
+            htmlStr += `<tr><td>${saram.no}</td><td>${saram.name}</td><td>${saram.부서}</td></tr>`
+        }
+        console.log(htmlStr);
+        
+    </script>
+</body>
+</html>

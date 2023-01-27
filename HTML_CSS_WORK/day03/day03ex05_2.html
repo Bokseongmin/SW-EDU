@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li span {
+            display: inline-block;
+            width: 200px;
+            height: 40px;
+        }
+        li span.del {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <!-- 주말 과제 : HTML,CSS, JS를 이용해서 ToDo-List 구현 -->
+    <div class="container">
+        <h1>할 일 목록</h1>
+        <p>
+            할 일 <input type="text" id="newWork" value="청소하기"> 
+            <button id="addBtn">추가</button>
+        </p>
+        <ul id="listArea"></ul>
+    </div>
+
+    <script>
+        var todoList = [
+            {no: 1, todo:"친구 만나서 스터디 하기", done: true},
+            {no: 2, todo:"주말 과제 하기", done: false},
+            {no: 3, todo:"배운 내용 복습하기", done: false},
+            {no: 4, todo:"자바 공부하기", done: false}
+        ];
+        var cnt = 5;
+
+        function changeFn(no) {
+            for(var i=0; i<todoList.length; i++) {
+                if(todoList[i].no == no) {
+                    todoList[i].done = !todoList[i].done;
+                }
+            }
+            drawList(); // function으로 선언 함수는 끌어올림 가능.
+        } // end of changeFn
+
+        // 함수로 선언
+        function drawList() {
+            var newLis = "";
+            for(var i=0; i<todoList.length; i++) {
+                var todo = todoList[i];
+                var liTmpStr = `<li>
+                    <input onChange="changeFn(${todo.no})" class="checkDone" type="checkbox" ${todo.done?"checked":""}>
+                    <span class="${todo.done?'del':''}">${todo.todo}</span>
+                    <button>삭제</button>
+                </li>`;
+                newLis += liTmpStr;
+            }
+            document.querySelector("#listArea").innerHTML = newLis;
+        } // end of drawList
+        // 함수를 실행 하려면 호출 해야 한다. 함수 이름 + ()
+        drawList();
+
+        // addBtn을 클릭하면 newWork의 내용이 todoList 에 추가되도록 한다.
+        var addBtn = document.querySelector("#addBtn");
+        var newWork = document.querySelector("#newWork");
+        addBtn.onclick = function(event) {
+            var newWorkValue = newWork.value;
+            // 1. todoList 배열에 먼저 추가.
+            // 2. todoList 배열의 내용을 화면에 보여지게 한다.
+            var newTodo = {no: cnt++, todo:newWorkValue, done: true};
+            todoList.push(newTodo);
+            // 한번 선언 된 함수는 재활용 가능.
+            drawList();
+        }
+    </script>
+</body>
+</html>
