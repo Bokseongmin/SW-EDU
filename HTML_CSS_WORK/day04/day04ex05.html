@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        div.container div {
+            padding: 3px;
+            margin: 3px;
+            border: 1px solid red;
+            border-radius: 7px;
+            width: 900px;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            padding: 3px;
+            margin: 3px;
+            border: 1px solid red;
+            border-radius: 7px;
+        }
+
+        .header nav p {
+            padding: 3px;
+            margin: 3px;
+            border: 1px solid red;
+            border-radius: 7px;
+        }
+
+        div.middle div {
+            width: 150px;
+            float: left;
+            height: 200px;
+        }
+
+        div.side li {
+            height: 50px;
+            border: 1px solid red;
+            list-style: none;
+
+            padding: 3px;
+            margin: 3px;
+
+            text-align: center;
+            height: auto;
+        }
+
+        div.middle div.center {
+            width: 550px;
+        }
+        
+        div.center > div {
+            height: 20px;
+        }
+
+        div.center div:nth-child(1) {
+            width: 530px;
+        }
+
+        div.center div:nth-child(3) {
+            width: 530px;
+        }
+
+        div.right .side-bar {
+            border: 1px solid red;
+            list-style: none;
+            height: 50px;
+            width: 130px;
+            padding: 3px;
+            margin: 3px;
+
+            
+            text-align: center;
+        }
+
+        div.footer {
+            clear: both;
+            height: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to My Homepage</h1>
+            <nav>
+                <p>Use the menu to select different Stylesheets</p>
+            </nav>
+        </div>
+        <div class="middle">
+            <div class="side">
+                <ul>
+                    <li>HOME</li>
+                    <li>PROFILE</li>
+                    <li>GALLERY</li>
+                    <li>LECTURE</li>
+                    <li>BOARD</li>
+                </ul>
+            </div>
+            <div class="center">
+                <div>Same Page Different Stylesheets</div>
+                <div>This is a demonstration of how different stylesheets can change the layout of your HTML page. You can change the layout of</div>
+                <div>No Styles</div>
+                <div>This Page uses DIV elements to group different sections of the HTML page. Click here to see</div>
+            </div>
+            <div class="right">
+                <div class="side-bar">
+                    <p>Side-bar</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet</p>
+        </div>
+    </div>
+</body>
+
+</html>

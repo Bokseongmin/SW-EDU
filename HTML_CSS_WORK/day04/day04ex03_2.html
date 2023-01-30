@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day04ex03_2</title>
+    <style>
+        #form1 input[type=text], #form1 textarea {
+            border: none;
+            border-bottom: 4px solid blue;
+            background-color: skyblue;
+            width: 400px;
+        }
+    </style>
+    <script>
+        // event 핸들러의 첫번째 인자는 event 객체이다.
+        function validateForm(event) {
+            // 이벤트가 발생 한 form을 event.target으로 지정
+            form = event.target;
+            event.preventDefault(); // 일시 중지
+            if(form.subject.value == "") {
+                alert("제목을 입력 하세요.");
+                form.subject.focus();
+                return;
+            }
+            if(form.writer.value == "") {
+                alert("글쓴이를 입력 하세요.");
+                form.writer.focus();
+                return;
+            }
+            if(form.writer.value.length < 2) {
+                alert("글쓴이 이름은 2자 이상 입력 하세요.");
+                form.writer.focus();
+                return;
+            }
+
+            form.action = "https://www.naver.com";
+            form.submit();
+        }
+
+        // internal 방식으로 변경
+        // form1의 dom 객체 선택
+        // form1에 이벤트 핸들러 걸기
+        
+        // 자바스크립트는 인터프리터 방식
+        // window(객체)가 모두 로드되면 기능이 실행 하도록 이벤트 핸들러 적용.
+        window.onload = function() {
+            // document.forms 문서의 모든 폼을 읽어 HMTLCollection으로 반환
+            //var form1 = document.forms[0];
+            //console.log(form1);
+
+            //var form1 = document.querySelector("#form1"); // CSS 셀렉터를 그대로 사용.
+            //console.log(form1);
+            
+            var form1 = document.getElementById("form1")
+            //form1.onsubmit = function() {
+            //    // event가 발생 하면 event객체가 자동 생성.
+            //    event.preventDefault();
+            //    //console.log(this == form1);
+            //    validateForm(this);
+            //}
+            form1.onsubmit = validateForm;  // 참조 시킬 경우엔 괄호 생략.
+        }
+    </script>
+</head>
+<body>
+    <h1>글쓰기</h1>
+    <form action="" id="form1">
+        <table>
+            <tr>
+                <th>제목</th>
+                <td><input type="text" name="subject"></td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td><input type="text" name="writer"></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td><textarea name="contnet" cols="30" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><input type="submit" value="저장"></td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        
+        
+    </script>
+</body>
+</html>
