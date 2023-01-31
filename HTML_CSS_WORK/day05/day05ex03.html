@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #lists {
+            border: 1px solid black;
+            padding: 0;
+            width: 1000px;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        #lists > li {
+            border: 1px solid red;
+            display: inline-block;
+            list-style: none;
+            width: 80px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        #slider {
+            position: relative;
+            border: 1px solid green;
+            width: 600px;
+            box-sizing: border-box;
+        }
+        #slider > div#box, #slider > button {
+            float: left;
+            position: absolute;
+        }
+        #slider > button {
+            width: 40px;
+        }
+        #slider > div#box {
+            position: absolute;
+            left: 40px;
+        }
+        #slider > button#rightBtn {
+            position: absolute;
+            left: 480px;
+        }
+        #box {
+            border: 1px solid blue;
+            overflow: hidden;
+            width: 440px;
+            box-sizing: border-box;
+        }
+        #slider ul#lists {
+            position: relative;
+            transition: left .5s;
+            /* transition적용은 초기값이 있어야 한다. */
+            left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <h1>길동이의 코딩 교실</h1>
+    <hr>
+    <div id="slider">
+        <button id="leftBtn">left</button>
+        <button id="rightBtn">right</button>
+        <div id="box"> 
+            <ul id="lists"></ul>
+        </div>
+    </div>
+
+    <script>
+        var itmeNames = ['뉴스','연예','정치','경제','문화','item6','item7','item8','item9','item10','item11','item12'];
+        var slider = document.getElementById("slider");
+        var lists = document.getElementById("lists");
+        var leftBtn = document.getElementById("leftBtn");
+        var rightBtn = document.getElementById("rightBtn");
+        itmeNames.forEach(function(item, index, arr){
+            var newLi = document.createElement("li");
+            newLi.innerHTML = itmeNames[index];
+            newLi.className = "imtemLi";
+            lists.appendChild(newLi);
+        });
+
+        var x = 0;
+        rightBtn.onclick = function() {
+            x += 80;
+            lists.style.left = x + "px";
+            if(x>=0) {
+                x = 0;
+                alert("처음입니다!");
+            }
+        }
+        leftBtn.onclick = function() {
+            x -= 80;
+            lists.style.left = x + "px";
+            if(x< -880) {
+                x = -880;
+                alert("마지막입니다!")
+            }
+        }
+    </script>
+</body>
+</html>

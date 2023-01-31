@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            border: 0px solid blue;
+            width: 300px;
+            height: 300px;
+            transform: rotate(0deg);
+            position: relative;
+            left: -100px;
+            transition: transform .5s;
+        }
+        #box > div {
+            border: 0px solid red;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 100px;
+            background-color: aqua;
+            background-image: url("images/bg.jpg");
+            background-size: 400px 400px;
+        }
+        #box > div:nth-child(2) {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -ms-transform-origin: center 150px; /* IE 9 */
+            transform: rotate(90deg);
+            transform-origin: center 150px;
+            background-color: beige;
+            background-position: -100px 0;
+        }
+        #box > div:nth-child(3) {
+            -ms-transform: rotate(180deg); /* IE 9 */
+            -ms-transform-origin: center 150px; /* IE 9 */
+            transform: rotate(180deg);
+            transform-origin: center 150px;
+            background-color: pink;
+            background-position: -200px 0;
+        }
+        #box > div:nth-child(4) {
+            -ms-transform: rotate(270deg); /* IE 9 */
+            -ms-transform-origin: center 150px; /* IE 9 */
+            transform: rotate(270deg);
+            transform-origin: center 150px;
+            background-color: coral;
+            background-position: -300px 0;
+        }
+        #slider {
+            border: 0px solid orange;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button id="rotateBtn">Rotate</button>
+    </div>
+    <div id="slider">
+        <div id="box">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+        </div>
+    </div>
+    <script>
+        var rotateBtn = document.getElementById("rotateBtn");
+        var box = document.getElementById("box");
+        var angle = 0;
+        var cnt = 0;
+        rotateBtn.onclick = function(event) {
+            angle = ++cnt * 90;
+            box.style.transform = "rotate("+angle+"deg)";
+        }
+    </script>
+</body>
+</html>
