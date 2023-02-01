@@ -1,5 +1,19 @@
 {
   "dependencies": {
-    "firebase": "^9.16.0"
-  }
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "firebase": "^9.16.0",
+    "nodemon": "^2.0.20"
+  },
+  "name": "day06",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev" : "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
