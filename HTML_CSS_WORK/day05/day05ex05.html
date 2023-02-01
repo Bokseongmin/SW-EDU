@@ -97,22 +97,25 @@
             imageListUl.appendChild(newLi);
         });
 
+        let x = 0;
         rightBtn.onclick = function () {
-            x += 80;
-            lists.style.left = x + "px";
+            x += 600;
             if (x >= 0) {
                 x = 0;
                 alert("처음입니다!");
+            } else {
+                boxUl.style.left = x + "px";
             }
-        }
+        };
         leftBtn.onclick = function () {
-            x -= 80;
-            lists.style.left = x + "px";
-            if (x < -880) {
-                x = -880;
+            x -= 600;
+            if (x < -2400) {
+                x = -2400;
                 alert("마지막입니다!")
+            } else {
+                boxUl.style.left = x + "px";
             }
-        }
+        };
     </script>
 </body>
 

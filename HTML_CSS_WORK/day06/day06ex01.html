@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*
+        @keyframes box {
+            from {background-color: red;}
+            to {background-color: yellow;}
+        }
+        */
+        @keyframes box {
+            0% {
+                background-color: red;
+            }
+            25% {
+                background-color: green;
+                width: 300px;
+                left: 200px;
+            }
+            50% {
+                background-color: blue;
+                height: 300px;
+                transform: rotate(-360deg);
+            }
+            75% {
+                background-color: yellow;
+            }
+        }
+
+        div#box {
+            position: relative;
+            left: 0px;
+            transform: rotate(0deg);
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            animation-name: box;
+            animation-duration: 4s;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS3 애니메이션 실습</h1>
+    <div id="box">BOX</div>
+</body>
+</html>
