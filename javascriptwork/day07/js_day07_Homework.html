@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js_day07_Homework.html</title>
+
+    <style>
+        div.gameBox {
+            border: 1px solid orange;
+            width: 306px;
+            height: 102px;
+            overflow: hidden;
+        }
+
+        div.gameBox ul {
+            padding: 0;
+            margin: 0;
+            float: left;
+        }
+
+        div.gameBox li {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>햄버거 하우스 게임</h1>
+    <div class="gameBox"></div>
+    <script>
+        function makeUl(gameBox) {
+            this.init = function () {
+                this.ulTag = document.createElement("ul");
+
+                for (var i = 1; i <= 10; i++) {
+                    var li = document.createElement("li");
+                    li.innerText = i;
+                    this.ulTag.appendChild(li);
+                }
+
+                gameBox.appendChild(this.ulTag);
+
+                // 게임 실행
+                this.play();
+            }
+
+            this.play = function () {
+                this.ulTag.style.position = "relative";
+                var ul_y = 0;
+                var stop = Math.abs(Math.floor(Math.random() * 5));
+                var cnt = 0;
+                // this.ul_y = getComputedStyle(this.ulTag);
+                var refInterval = setInterval(() => {
+                    ul_y -= 10;
+                    if (ul_y <= -1000) {
+                        ul_y = 0;
+                        cnt++;
+                        console.log(cnt, stop);
+                        if (cnt >= stop) {
+                            clearInterval(refInterval);
+                        }
+                    }
+                    this.ulTag.style.top = ul_y + "px";
+                }, 20);
+            }
+        }
+
+        var gameBox = document.querySelector(".gameBox");
+        new makeUl(gameBox).init();
+        new makeUl(gameBox).init();
+        new makeUl(gameBox).init();
+    </script>
+</body>
+
+</html>
