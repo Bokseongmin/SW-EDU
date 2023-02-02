@@ -26,6 +26,8 @@
             height: 100px;
             border: 1px solid black;
             list-style: none;
+            text-align: center;
+            font-size: 70px;
         }
     </style>
 </head>
@@ -33,48 +35,69 @@
 <body>
     <h1>햄버거 하우스 게임</h1>
     <div class="gameBox"></div>
+
+    <button id="playBtn">Play</button>
+
     <script>
         function makeUl(gameBox) {
             this.init = function () {
                 this.ulTag = document.createElement("ul");
-
                 for (var i = 1; i <= 10; i++) {
                     var li = document.createElement("li");
-                    li.innerText = i;
+                    li.innerText = Math.abs(Math.floor(Math.random() * 10));
                     this.ulTag.appendChild(li);
                 }
 
                 gameBox.appendChild(this.ulTag);
-
                 // 게임 실행
-                this.play();
+                //this.play();
             }
 
             this.play = function () {
                 this.ulTag.style.position = "relative";
                 var ul_y = 0;
-                var stop = Math.abs(Math.floor(Math.random() * 5));
+                var stop = Math.abs(Math.floor(Math.random() * 10));
                 var cnt = 0;
                 // this.ul_y = getComputedStyle(this.ulTag);
                 var refInterval = setInterval(() => {
                     ul_y -= 10;
-                    if (ul_y <= -1000) {
+                    if (ul_y <= -920) {
                         ul_y = 0;
                         cnt++;
-                        console.log(cnt, stop);
                         if (cnt >= stop) {
-                            clearInterval(refInterval);
+                            playBtn.disabled = false;
+                            clearTimeout(refInterval);
                         }
                     }
                     this.ulTag.style.top = ul_y + "px";
-                }, 20);
+                }, Math.abs(Math.floor(Math.random() * 15)));
             }
         }
 
         var gameBox = document.querySelector(".gameBox");
-        new makeUl(gameBox).init();
-        new makeUl(gameBox).init();
-        new makeUl(gameBox).init();
+
+        var gameBox1;
+        var gameBox2;
+        var gameBox3;
+        function makeBox() {
+            gameBox1 = new makeUl(gameBox);
+            gameBox1.init();
+            gameBox2 = new makeUl(gameBox);
+            gameBox2.init();
+            gameBox3 = new makeUl(gameBox);
+            gameBox3.init();
+        }
+        makeBox();
+
+        var playBtn = document.getElementById("playBtn");
+        playBtn.onclick = function () {
+            gameBox.replaceChildren();
+            makeBox();
+            gameBox1.play();
+            gameBox2.play();
+            gameBox3.play();
+            playBtn.disabled = true;
+        }
     </script>
 </body>
 
