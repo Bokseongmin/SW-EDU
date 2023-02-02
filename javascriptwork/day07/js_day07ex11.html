@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 함수를 다른 함수의 인자로 전달
+        // callback 함수
+        function aa(callback) {
+            console.log(">>> aa() 호출");
+            // 매개변수에 전달된 함수를 실행 시킨다.
+            callback();
+        }
+
+        // aa 함수를 aaRef에 참조 시킨다.
+        var aaRef = aa;
+        //aaRef();
+
+        function bb() {
+            console.log(">>> bb() 함수 호출");
+        }
+        aa(bb);
+    </script>
+</body>
+</html>

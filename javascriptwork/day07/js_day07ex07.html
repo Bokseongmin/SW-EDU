@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function People(_name) {
+            console.log(this);
+            this.name = _name;
+            this.move = function() {
+                var cnt = 0;
+                var ref = setInterval(() => {
+                    console.log(this);
+                    if(++cnt >= 2) {
+                        clearInterval(ref);
+                    }
+                }, 500);
+            }
+        }
+        // 객체 생성
+        var p = new People("박");
+        p.move()
+    </script>
+</body>
+</html>

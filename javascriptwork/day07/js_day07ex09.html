@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 함수를 배열에 담아서 사용.
+        var _factory = [
+            function() {
+                return null;
+            },
+            function() {
+                return null;
+            },
+            function() {
+                return "Hello world";
+            },
+            function() {
+                return null;
+            }
+        ];
+
+        //for(var fn of _factory) {
+        //    console.log(fn() );
+        //}
+
+        for(var i=0; i<_factory.length; i++) {
+            try {
+                console.log("문자열의 길이 : ", _factory[i]().length);
+                break;
+            } catch(e) {
+                console.log("catch : null입니다.")
+                continue;
+            }
+        }
+        console.log("끝!")
+    </script>
+</body>
+</html>

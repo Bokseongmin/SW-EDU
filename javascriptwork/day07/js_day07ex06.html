@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 클래스 식별자는 대문자로 시작한다.
+        // 클래스 생성자 선언
+        // People 객체 내부에서 this는 People 객체 자신
+        // setInterval 함수에서 this는 다시 Window 객체 된다. 
+        function People(_name) {
+            this.name = _name;
+            this.move = function() {
+                //console.log(this); // People
+                //console.log(this.name);
+                var cnt = 0;
+                // 함수 스코프에서 사용 할 변수에 this를 대입
+                var THIS = this;
+                var ref = setInterval(function() {
+                    //console.log(this); // Window
+                    //console.log(this.name); // People의 name을 접근하지 않는다.
+                    // setInterval 내부에서 People의 멤버를 접근 하는 방법은?
+                    console.log("THIS.name : ", THIS.name);
+                    if(++cnt >= 2) {
+                        clearInterval(ref);
+                    }
+                }, 500);
+            }
+        }
+
+        // 객체 생성
+        var p = new People("박");
+        p.move()
+    </script>
+</body>
+</html>

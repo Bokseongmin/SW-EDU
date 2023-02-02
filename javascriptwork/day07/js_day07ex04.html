@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsDay02Ex04</title>
+</head>
+<body>
+    
+    <script>
+
+        var myObj = {
+            name : "홍길동",
+            email : "hong@saram.com",
+            showInfo : function() {
+                var a = "a변수 값"; // showInfo 함수 범위에서만 사용 됨.
+                let b = "b변수 값"; // 블럭 안에서만 사용 됨.
+                this.c = "c변수의 값"; // myObj 객체의 멤버
+                console.log(this.name, this.email);
+                console.log("myObj 내의 this : ", this);
+                console.log(window);
+            }
+        }
+
+        myObj['showInfo']();
+        //console.dir(window);
+
+    </script>
+</body>
+</html>

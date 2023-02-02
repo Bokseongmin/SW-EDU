@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div#box {
+            border:1px solid black;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            left: 0px;
+            transition: all .03s;
+        }
+    </style>
+</head>
+<body>
+    <button id="playBtn">Play</button>
+    <div id="box">box</div>
+
+    <script>
+        var playBtn = document.getElementById("playBtn");
+        var move = function( callback ) {
+            var box = document.querySelector("div#box");
+            box.callback = callback;
+            var x = parseInt(getComputedStyle(box).left);
+
+            var refInterval = setInterval(function() {
+                x += 10;
+                if(x >= 400) {
+                    x = 400;
+                    clearInterval(refInterval);
+                    // 모든 작업 종료 후 실행
+                    box.callback(box); // callback == move 호출 시 익명함수
+                }
+                box.style.left = x + "px";
+            }, 30);
+        };
+
+        playBtn.onclick = function(event) {
+            move(function() {
+                console.log(this); // this == box
+                this.style.backgroundColor = "yellow";
+            });
+        };
+        
+    </script>
+</body>
+</html>

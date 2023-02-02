@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsDay02Ex10</title>
+    <style>
+        ul#menu > li {
+            display:inline-block;
+            height: 40px;
+            width: 100px;
+            border: 2px solid gray;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>- 메뉴 - </h1>
+    <ul id="menu">
+        <li data-no="0">입력</li>
+        <li data-no="1">출력</li>
+        <li data-no="2">검색</li>
+        <li data-no="3">수정</li>
+        <li data-no="4">삭제</li>
+    </ul>
+
+    <script>
+        var menuFactory = [
+            function() {
+                console.log(">>> 입력 기능");
+            },
+            function() {
+                console.log(">>> 출력 기능");
+            },
+            function() {
+                console.log(">>> 검색 기능");
+            },
+            function() {
+                console.log(">>> 수정 기능");
+            },
+            function() {
+                console.log(">>> 삭제 기능");
+            }
+        ]
+
+        var btns = document.querySelectorAll("ul#menu>li");
+        //console.dir(btns);
+        for(var btn of btns) {
+            //console.log(btn);
+            btn.onclick = (event) => {
+                // function으로 선언하면 this는 target이다.
+                // => 함수로 선언하면 this는 window이다.
+                //console.log(event.target);
+                //console.log(typeof event.target.dataset.no);
+                let no = Number(event.target.dataset.no);
+                //console.log(typeof no);
+                menuFactory[no]();
+            }
+        }
+    </script>
+</body>
+</html>
