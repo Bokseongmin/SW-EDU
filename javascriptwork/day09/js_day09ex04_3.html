@@ -49,7 +49,8 @@
                 this.cells = []
                 for(var i=0; i<16; i++) {
                     this.cells.push(new Cell(this.element, String.fromCharCode(65+i%8), function() {
-                        console.log(this);
+                        console.log(this.newDiv.ch);
+                        this.newDiv.innerText = this.newDiv.ch;
                     }) );
                 }
             }
@@ -69,6 +70,18 @@
                 return this; // 메소드 체인
             }
 
+            // 5생성하고 5초후에 내용 숨기기
+            hide() {
+                setTimeout(()=>{
+                    for(var i=0; i<this.cells.length; i++) {
+                        var ch = this.cells[i].newDiv.innerHTML;
+                        this.cells[i].newDiv.ch = ch;
+                        this.cells[i].newDiv.innerHTML = "";
+                    }
+                }, 5000);
+                return this; 
+            }
+
             start() {
                 //console.log("start 메소드 실행 >", this.cells);
                 // 버튼의 이벤트 핸들러 작동
@@ -79,7 +92,7 @@
             }
         }
         var puzzle = document.getElementById("puzzle");
-        new Puzzle(puzzle).shuffle().start();
+        new Puzzle(puzzle).shuffle().hide().start();
     </script>
 </body>
 </html>
