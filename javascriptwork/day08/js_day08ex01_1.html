@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsDay03Ex01.html</title>
+</head>
+<body>
+    <script>
+        var num;
+        console.log(num);
+        console.log(undefined);
+        console.log(NaN);
+        console.log(null);
+        // if ~ else
+        // undefined, ull, NaN등은 false와 동일한다.
+        //if (NaN) {
+        //    document.write("true 입니다.");
+        //} else {
+        //    document.write("false 입니다.");
+        //}
+
+        // prompt로 입력 받은 데이터의 타입은 string이다.
+        // number형식으로 사용하기 위해서 parseInt(), Number()로 형변환.
+        // const age = parseInt(prompt("나이 입력: ") ); // 팝업창으로 데이터 입력
+        // Number()로 형변환 하면 NaN일 경우 0을 반환한다.
+        const age = Number(prompt("나이 입력: ") ); // 팝업창으로 데이터 입력
+        document.write(`<h2>당신의 나이는 ${age}세입니다.</h2>`);
+        if(age > 19) {
+            var isAdult = "성인";
+        } else {
+            var isAdult = "미성년";
+        }
+        document.write(`당신은 ${isAdult}입니다.`);
+    </script>
+</body>
+</html>

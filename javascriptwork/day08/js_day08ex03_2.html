@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>월을 선택하세요.</h1>
+    <div id="monthBtns">
+        <button data-month="1">1월</button>
+        <button data-month="2">2월</button>
+        <button data-month="3">3월</button>
+        <button data-month="4">4월</button>
+        <button data-month="5">5월</button>
+        <button data-month="6">6월</button>
+        <button data-month="7">7월</button>
+        <button data-month="8">8월</button>
+        <button data-month="9">9월</button>
+        <button data-month="10">10월</button>
+        <button data-month="11">11월</button>
+        <button data-month="12">12월</button>
+    </div>
+    <div id="demo">결과: 2월은  28일까지 있다.</div>
+    <!-- switch ~ case문으로 구현 해 본다. -->
+    <script>
+        const monthBtnList = document.querySelectorAll("#monthBtns>button");
+        const demo = document.getElementById("demo");
+
+        monthBtnList.forEach((item, idx)=> {
+            item.addEventListener('click', (event)=>{
+                let month = Number(event.target.dataset.month);
+                let day = 31;
+                switch(month) {
+                    case 2 : day = 28; break;
+                    case 4 : 
+                    case 6 :
+                    case 9 :
+                    case 11 : day = 30;
+                }
+                demo.innerText = `결과 : ${month}는 ${day}일까지 있다.`;
+            });
+        });
+    </script>
+</body>
+</html>

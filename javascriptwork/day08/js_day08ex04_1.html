@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsDay03Ex04</title>
+</head>
+<body>
+    <h1>난수 발생기 (Random)</h1>
+
+    <div id="demo"></div>
+
+    <script>
+        let number = 1 + Math.floor( Math.random() * 45 );
+        console.log(number);
+
+        // 45~100사이의 난수만 발생 하도록 한다.
+        // 0 ~ 54
+        // 1 ~ 55
+        // 2 ~ 56
+        // 3 ~ 57
+        // ...
+        // 45 ~ 99
+        let number2 = 45 + Math.floor( Math.random() * 56 );
+        console.log(number2);
+    </script>
+</body>
+</html>

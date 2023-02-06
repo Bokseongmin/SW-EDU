@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsDay03Ex03</title>
+</head>
+<body>
+    <div id="btns">
+        <button>오랜지</button>
+        <button>바나나</button>
+        <button>수박</button>
+    </div>
+    <div id="demo">결과 : </div>
+
+    <script>
+        var arr = [];
+        var btns = document.querySelectorAll("div#btns > button");
+        var demo = document.getElementById("demo");
+        // NodeList는 활용 가능한 내장 메소드가 제한 적이다. 
+        // Array로 변환 하면 Array에는 더 풍부한 메소드가 내장 되어 있다.
+        btns.forEach(function(item, index) {
+            arr.push(item);
+        });
+        // Javascript의 Array로 변환 해서 사용.
+        arr.forEach(function(item, index){
+            item.addEventListener('click', (event) => {
+                //console.log(index);
+                //console.log(event.target.innerText);
+                // switch(값)
+                let result = "";
+                switch(index) {
+                    case 0 : 
+                        console.log("오랜지를 선택 했습니다."); 
+                        result = "오랜지";
+                        break;
+                    case 1 : 
+                        console.log("바나나를 선택 했습니다."); 
+                        result = "바나나";
+                        break;
+                    case 2 : 
+                        console.log("수박을 선택 했습니다.");
+                        result = "수박";
+                }
+                
+                demo.innerHTML = "결과 : " + result + "를 선택 했습니다.";
+            });
+        });
+    </script>
+</body>
+</html>

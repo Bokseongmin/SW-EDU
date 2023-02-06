@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또번호 생성기</title>
+    <style>
+        div#lottoArea div {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            border: 1px solid red;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>로또 번호 생성기</h1>
+    <fieldset>
+        <legend>Lotto</legend>
+        <div id="lottoArea">
+            <div>1</div>
+            <div>1</div>
+            <div>1</div>
+            <div>1</div>
+            <div>1</div>
+            <div>1</div>
+        </div>
+    </fieldset>
+    <button id="genBtn">Generate</button>
+
+    <script>
+        const colors = ['red','green','orange','yellow','skyblue','pink'];
+        const ballList = document.querySelectorAll("#lottoArea > div");
+        const genBtn = document.getElementById("genBtn");
+        
+        ballList.forEach((item, idx) => {
+            item.style.backgroundColor = colors[idx];
+        });
+
+        function lottoFn() {
+            // 1~45까지의 중복 되지 않은 난수 6개 생성
+            const lotto = new Set();
+            // Set 구조를 활용해서 중복 체크
+            for(;lotto.size < 6;) {
+                lotto.add(  1+Math.floor(Math.random()*45)  );
+            }
+
+            // Set구조에는 index가 없다. 그래서 정렬 안됨.
+            let newLotto = [];
+            lotto.forEach((value)=> {
+                newLotto.push( value );
+            });
+            newLotto.sort(function(a, b){return a-b});
+            // 화면에 생성된 번호 출력.
+            newLotto.forEach((value, idx) => {
+                console.log(idx);
+                ballList[idx].innerHTML = value;
+            });
+        }
+
+        genBtn.addEventListener('click', (event) => {
+            lottoFn();
+        });
+    </script>
+</body>
+</html>
