@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div#box {
+            position: absolute;
+            border: 1px solid red;
+            background-color: yellow;
+            width: 100px;
+            height:  100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>길동이의 코딩 교실</h1>
+    <div id="box">Box</div>
+
+    <script>
+        var box = document.getElementById("box");
+        box.addEventListener("mousedown", (event) => {
+            // 마우스를 down했을때
+            // box와 마우스 클릭 지점의 간격을 유지 
+            var target = event.target;  // box
+            var targetX = parseInt(getComputedStyle(target).getPropertyValue("left") );
+            var targetY = parseInt(getComputedStyle(target).getPropertyValue("top") );
+            var gapX = targetX - event.clientX;
+            var gapY = targetY - event.clientY;
+            box.addEventListener("mousemove", (event2)=>{
+                target.style.left = event2.clientX + gapX + "px";
+                target.style.top = event2.clientY + gapY + "px";
+                document.addEventListener("mouseup", (event) => {
+                    box.removeEventListener("mousemove", null);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

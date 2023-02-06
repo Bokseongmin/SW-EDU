@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ES5 이전에는 function 키워드를 class 키워드 대신 사용.
+        function People(name, age) {
+            this.name = name;
+            this.age = age;
+
+            // 생성자 내부에 함수를 추가면 소스코드가 모든 객체에 복제된다.
+            //this.showInfo = function() {
+            //    document.write("<p>"+name + "의 나이는  " + age + "세</p>");
+            //}
+        }
+        // 클래스.prototype은 모든 객체가 공유하는 속성이다.
+        People.prototype.showInfo = function() {
+            document.write("<p>"+ this.name +"의 나이는  "+ this.age +"세</p>");
+        }
+
+        // 상속
+        function Student (name, age, major) {
+            this.name = name;
+            this.age = age;
+            this.major = major;
+        }
+        Student.prototype = new People();
+        // protype을 다른 클래스의 객체로 바뀐 상태이기때문에
+        // 생성자도 사라 졌을 수도 있다.
+        // 자식 클래스 자신의 생성자로 사용 하란 의미.
+        //Student.prototype.constructor = Student;
+        Student.prototype.showInfo = function() {
+            document.write("<p>전공이 "+ this.major+"인 "+ this.name +"의 나이는  "+ this.age +"세</p>");
+        }
+
+        var kim = new People("김길동", 23);
+        kim.showInfo();
+
+        var park = new Student("박길동", 12, "컴퓨터");
+        park.showInfo();
+
+    </script>
+</body>
+</html>

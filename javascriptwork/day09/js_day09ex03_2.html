@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            border: 2px solid gray;
+            padding: 5px;
+        }
+        MyDiv {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">Box</div>
+
+
+    <script>
+        class MyDiv extends HTMLDivElement {
+            constructor() {
+                console.log("MyDiv 엘리먼트 생성");
+            }
+
+            testDiv() {
+                console.log("test div 메소드 호출");
+            }
+        }
+
+
+        // Object > EventTarget > Node > Element > HTMLElement > HTMLDivElement
+        var box = document.getElementById("box");
+
+        var myDiv = document.createElement("MyDiv");
+        myDiv.innerHTML = "MY Div 태그";
+        box.appendChild(myDiv);
+    </script>
+</body>
+</html>

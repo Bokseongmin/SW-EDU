@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        Array.prototype.printConsole = function() {
+            console.log(this);
+        }
+        Array.prototype.printWrite = function() {
+            // ul로 문서에 출력.
+            var html = "<ul>";
+            this.forEach(function(item, idx) {
+                html += "<li>"+item+"</li>"
+            });
+            html += "</ul>";
+            document.write(html);
+        }
+        var arr = ["오징어","꼴뚜기","대구","명태","거북이"];
+        arr.printWrite();
+        arr.printConsole();
+    </script>
+</body>
+</html>

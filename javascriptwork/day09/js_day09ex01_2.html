@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div#box {
+            position: absolute;
+            border: 1px solid red;
+            background-color: yellow;
+            width: 100px;
+            height:  100px;
+            z-index: 1;
+        }
+        div#targetBox {
+            position: absolute;
+            border: 1px solid black;
+            background-color: beige;
+            width: 150px;
+            height:  200px;
+            left: 400px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <h1>길동이의 코딩 교실</h1>
+    <div id="box">Box</div>
+    <div id="targetBox">Target Box</div>
+
+    <script>
+        
+        function moveElement(element, callback) {
+            element.callback = callback;
+            element.addEventListener("mousedown", (event) => {
+                var target = event.target;  // box
+                var targetX = parseInt(getComputedStyle(target).getPropertyValue("left") );
+                var targetY = parseInt(getComputedStyle(target).getPropertyValue("top") );
+                element.gapX = targetX - event.clientX;
+                element.gapY = targetY - event.clientY;
+                let mousemoveHandler = (event)=>{
+                    target.style.left = event.clientX + element.gapX + "px";
+                    target.style.top = event.clientY + element.gapY + "px";
+                };
+                element.addEventListener("mousemove", mousemoveHandler);
+                document.addEventListener("mouseup", (event) => {
+                    element.removeEventListener("mousemove", mousemoveHandler);
+                    // 충돌 검사 - callbac호출
+                    element.callback();
+                });
+            });
+        }
+
+        var box = document.getElementById("box");
+        var originX = parseInt(getComputedStyle(box).getPropertyValue("left"));
+        var originY = parseInt(getComputedStyle(box).getPropertyValue("top"));
+        var targetBox = document.getElementById("targetBox");
+        // callback 함수를 활용
+        moveElement(box, function() {
+            var targetX = parseInt(getComputedStyle(targetBox).getPropertyValue("left"));
+            var targetY = parseInt(getComputedStyle(targetBox).getPropertyValue("top"));
+            var targetW = parseInt(getComputedStyle(targetBox).getPropertyValue("width"));
+            var targetH = parseInt(getComputedStyle(targetBox).getPropertyValue("height"));
+            targetW = targetX+targetW;
+            targetH = targetY+targetH;
+            // targetY ~ (tagetY+targetH) ~ (tagetX+targetW)의 사이에 box의 중심이 있는가?
+            // targetY ~ (tagetY+targetH)의 사이에 box의 중심이 있는가?
+            var boxX = parseInt(getComputedStyle(box).getPropertyValue("left"));
+            var boxY = parseInt(getComputedStyle(box).getPropertyValue("top"));
+            var boxW = parseInt(getComputedStyle(box).getPropertyValue("width"));
+            var boxH = parseInt(getComputedStyle(box).getPropertyValue("height"));
+            var centerX = boxX + boxW/2;
+            var centerY = boxY + boxH/2;
+            console.log(targetX, targetY, targetW, targetH);
+            if((centerX >= targetX && centerX <= targetW) && (centerY>=targetY && centerY<=targetH)) {
+                console.log("충돌");
+            } else {
+                box.style.left = originX + "px";
+                box.style.top = originY + "px";
+            }
+        });
+    </script>
+</body>
+</html>

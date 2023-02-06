@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div#puzzle {
+            width: 400px;
+        }
+        div.cell {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            box-sizing: border-box;
+            float: left;
+            line-height: 100px;
+            text-align: center;
+            font-size: 36px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="puzzle"></div>
+
+    <script>
+        class Cell {
+            constructor(parentElement, content, callback) {
+                this.callback = callback;
+                this.parentElement = parentElement;
+                this.newDiv = document.createElement("div");
+                this.newDiv.innerHTML = content;
+                this.newDiv.className = "cell";
+                parentElement.appendChild(this.newDiv);
+                return this;
+            }
+            startCellEvent() {
+                this.newDiv.addEventListener('click', (event)=>{
+                    this.callback();
+                });
+            }
+        }
+
+        class Puzzle {
+            constructor(element) {
+                this.element = element;
+                this.cells = []
+                for(var i=0; i<16; i++) {
+                    this.cells.push(new Cell(this.element, String.fromCharCode(65+i%8), function() {
+                        console.log(this);
+                    }) );
+                }
+            }
+            shuffle() {
+                // 직접 해 보기 : 카드의 위치를 섞어준다.
+                //console.log(this.cells);
+                // cells의 위치를 랜덤하게 0~15까지 내용 뽑아서 섞어준다.
+                for(var i=0; i<30; i++) {
+                    var j = Math.floor(Math.random() * 16);
+                    var k = Math.floor(Math.random() * 16);
+                    var a = this.cells[j].newDiv;
+                    var b = this.cells[k].newDiv;
+                    var tmp = a.innerText;
+                    a.innerText = b.innerText;
+                    b.innerText = tmp;
+                }
+                return this; // 메소드 체인
+            }
+
+            start() {
+                //console.log("start 메소드 실행 >", this.cells);
+                // 버튼의 이벤트 핸들러 작동
+                for(var i=0; i<this.cells.length; i++) {
+                    this.cells[i].startCellEvent();
+                }
+                return this;
+            }
+        }
+        var puzzle = document.getElementById("puzzle");
+        new Puzzle(puzzle).shuffle().start();
+    </script>
+</body>
+</html>
