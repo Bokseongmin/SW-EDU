@@ -26,6 +26,13 @@ app.get("/saram/list", (resq, res)=> {
     res.send({saramList: saramList});
 });
 
+app.get("/saram/add", (req,res) => {
+    const addSaram = { no: saramList.length + 1, name: req.query.name, email: req.query.email, phone: req.query.phone};
+    saramList.push(addSaram);
+    console.log(saramList);
+    res.send({saramList});
+});
+
 app.get("/", (req, res)=>{
     /* 
     res.writeHead(200, {"Content-Type":"text/html; charset=UTF-8"});

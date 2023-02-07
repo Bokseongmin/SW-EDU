@@ -11,15 +11,15 @@
 <body>
     <h1>js_day10ex02_5</h1>
     <form id="inputForm" action="" method="get">
-        Name : <input type="text" value="test2"> <br/>
-        Email : <input type="text" value="test2@saram.com"> <br/>
-        Phone : <input type="text" value="010-2222-3333"> <br/>
+        Name : <input name="name" type="text" value="test2"> <br/>
+        Email : <input name="email" type="text" value="test2@saram.com"> <br/>
+        Phone : <input name="phone" type="text" value="010-2222-3333"> <br/>
         <input type="submit" value="SAVE">
     </form>
     <div id="demo">
         Ajax기술로 saram_data.json파일의 내용을 로드한다.
     </div>
-    <p><button id="loadBtn">Laod Button</button></p>
+    <p><button id="loadBtn">Load Button</button></p>
 
     <script type="text/template" id="saramListTemp">
         <table border="1" width="100%">
@@ -63,6 +63,12 @@
             let form = event.target;
             // form의 데이터를 읽어온다.
             // myGetAjax를 이용해서 서버에 전송 및 결과를 json형태로 갱신
+            let name = form.name.value;
+            let email = form.email.value;
+            let phone = form.phone.value;
+            
+            myGetAjax("http://localhost:3000/saram/add?name=" + name + "&email=" + email +"&phone=" + phone, function (xhr) {
+            });
         });
         loadBtn.addEventListener("click", (event)=>{
             // index.js에 /saram/list 요청 구현
