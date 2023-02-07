@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js_day10ex02_5</title>
+    <!-- 구글링으로 underscore js CDN 검색 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <h1>js_day10ex02_5</h1>
+    <form id="inputForm" action="" method="get">
+        Name : <input type="text" value="test2"> <br/>
+        Email : <input type="text" value="test2@saram.com"> <br/>
+        Phone : <input type="text" value="010-2222-3333"> <br/>
+        <input type="submit" value="SAVE">
+    </form>
+    <div id="demo">
+        Ajax기술로 saram_data.json파일의 내용을 로드한다.
+    </div>
+    <p><button id="loadBtn">Laod Button</button></p>
+
+    <script type="text/template" id="saramListTemp">
+        <table border="1" width="100%">
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화</th>
+            </tr>
+        <%
+        for(var row of saramList) {
+        %>
+            <tr>
+                <td><%=row.no%></td>
+                <td><%=row.name%></td>
+                <td><%=row.email%></td>
+                <td><%=row.phone%></td>
+            </tr>
+        <% } // end of for %>
+        </table>
+    </script>
+    <script>
+        var demo = document.getElementById("demo");
+        var loadBtn = document.getElementById("loadBtn");
+        var saramListTemp = document.getElementById("saramListTemp");
+        var inputForm = document.getElementById("inputForm");
+        
+        // 라이버리의 Ajax로 대체 되는 함수 : axios, jQuery ajax
+        var myGetAjax = (srcUrl, callback) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = (event) => {
+                callback(xhr);
+            };
+            xhr.open("GET", srcUrl, true);
+            xhr.send();
+        }
+
+        // inputForm의 전송 버튼을 누를 시 데이터 전송
+        inputForm.addEventListener("submit", (event)=> {
+            event.preventDefault(); // 기본 기능 중지
+            let form = event.target;
+            // form의 데이터를 읽어온다.
+            // myGetAjax를 이용해서 서버에 전송 및 결과를 json형태로 갱신
+        });
+        loadBtn.addEventListener("click", (event)=>{
+            // index.js에 /saram/list 요청 구현
+            myGetAjax("http://localhost:3000/saram/list", function(xhr) {
+                let saramList = JSON.parse(xhr.responseText)["saramList"];
+                let compile = _.template(saramListTemp.innerHTML);
+                let html = compile({saramList});
+                demo.innerHTML = html;
+            });
+        });
+    </script>
+</body>
+</html>

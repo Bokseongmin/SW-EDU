@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Home page</h2>
+    <table border="1" width="100%">
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>나이</th>
+        </tr>
+    <%
+    console.log(testArr);
+    for(var row of testArr) {
+    %>
+        <tr>
+            <td><%=row.no%></td>
+            <td><%=row.name%></td>
+            <td><%=row.age%></td>
+        </tr>
+    <% } // end of for %>
+    </table>
+    
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js_day10ex02_3</title>
+    <!-- 구글링으로 underscore js CDN 검색 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <h1>js_day10ex02_3</h1>
+    <div id="demo">
+        Ajax기술로 saram_data.json파일의 내용을 로드한다.
+    </div>
+    <p><button id="loadBtn">Load Button</button></p>
+
+    <script type="text/template" id="saramListTemp">
+        <table border="1" width="100%">
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화</th>
+            </tr>
+        <%
+        for(var row of saramList) {
+        %>
+            <tr>
+                <td><%=row.no%></td>
+                <td><%=row.name%></td>
+                <td><%=row.email%></td>
+                <td><%=row.phone%></td>
+            </tr>
+        <% } // end of for %>
+        </table>
+    </script>
+    <script>
+        var demo = document.getElementById("demo");
+        var loadBtn = document.getElementById("loadBtn");
+        var saramListTemp = document.getElementById("saramListTemp");
+        
+        loadBtn.addEventListener("click", (event)=>{
+            const xhr = new XMLHttpRequest();
+            xhr.onload = (event) => {
+                let saramList = JSON.parse(xhr.responseText)["saramList"];
+                let compile = _.template(saramListTemp.innerHTML);
+                let html = compile({saramList});
+                demo.innerHTML = html;
+            };
+            xhr.open("GET", "http://localhost:3000/js/saram_data.json", true);
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
