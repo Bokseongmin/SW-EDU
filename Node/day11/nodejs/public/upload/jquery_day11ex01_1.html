@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jQuery CDN -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+        //console.dir( $(document) );
+        //console.dir( document );
+
+        // jQuery의 진입점
+        // 문서를 모두 로드하면 함수를 실행.
+        //$(document).on("ready", function() {
+        //    alert("Hello jQuery");
+        //});
+        //jQuery(function(){
+        //    alert("Hello jQuery");
+        //});
+        //$(function(){
+        //    alert("Hello jQuery");
+        //});
+        $(document).ready(function() {
+            $("#clickBtn").on("click", function(event) {
+                alert("Hello")
+            });
+            //document.getElementById("clickBtn").addEventListener("click", function(event){
+            //    alert("Hello 2");
+            //});
+        });
+    </script>
+</head>
+<body>
+    
+    <button id="clickBtn">Click Me</button>
+
+</body>
+</html>

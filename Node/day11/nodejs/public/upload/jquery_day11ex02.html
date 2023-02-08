@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+
+    <button id="clickBtn">Click</button>
+
+    <script>
+        const clickBtn = document.querySelector("#clickBtn");
+        console.dir(clickBtn);
+
+        // DOM을 jQuery에 넣으면 jQuery객체로 바뀐다.
+        const _clickBtn = $(clickBtn);
+        console.dir(_clickBtn);
+
+        // jQuery객체를 DOM객체로 변환(꺼낸다)
+        const btn = $(clickBtn)[0];
+        console.dir(btn);
+
+        // jQuery와 기존 DOM을 서로 바꿔가면서 사용 가능.
+    </script>
+</body>
+</html>

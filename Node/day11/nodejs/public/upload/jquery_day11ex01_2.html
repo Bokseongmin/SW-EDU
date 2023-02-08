@@ -1,11 +1,10 @@
-!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>jquery_day11ex01_2.html</title>
-    <script src="http://code.jquery.com/jquery.js"></script>
 </head>
 <body>
     <div id="btns">
@@ -15,18 +14,19 @@
     </div>
 
     <script>
-        //var btns = document.getElementById("btns").getElementsByTagName("button");
-        //for(var btn of btns){
-        //    btn.onclick = function(){
-        //        document.body.style.backgroundColor = this.innerText;
-        //    }
-        //};
+        var redBtn = document.getElementById("redBtn");
+        var greenBtn = document.getElementById("greenBtn");
+        var blueBtn = document.getElementById("blueBtn");
 
-        // List형태의 여러 요소에 한번에 이벤트 적용.
-        $("#btns > button").click(function(event) {
-            // $() DOM 객체를 인자로 넣어주면 바로 jQuery객체로 바뀐다.
-            $("body").css("backgroundColor", $(this).text());
-        });
+        redBtn.onclick = function(){
+            document.body.style.backgroundColor = "red";
+        }
+        greenBtn.onclick = function(){
+            document.body.style.backgroundColor = "green";
+        }
+        blueBtn.onclick = function(){
+            document.body.style.backgroundColor = "blue";
+        }
     </script>
 </body>
 </html>

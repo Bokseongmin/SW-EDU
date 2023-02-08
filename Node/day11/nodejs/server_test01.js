@@ -28,25 +28,15 @@ app.get("/", (req, res)=>{
 
 app.post("/saram/input", (req, res)=>{
     var form = new formidable.IncomingForm();
-    form.uploadDir = "D:\\";
     form.parse(req, function (err, fields, files) {
-        console.log(">>>>>> (1) ", fields);
-    });
-
-    form.on("end",  function () {
-        console.log(">>>>>> (2) ");
-        console.log("파일 갯수 : ", this.openedFiles.length);
-        for(var i=0; i<this.openedFiles.length; i++) {
-            let file = this.openedFiles[i];
-           //console.dir(file);
-            var oldpath = file.filepath;
-            var newpath = 'D:\\.SW-EDU\\SW-EDU\\upload\\' + file.originalFilename;
-            fs.rename(oldpath, newpath, function (err) {
-                if (err) throw err;
-                res.write("<h2>upload file received!</h2>");
-                res.end();
-            });
-        }
+        console.dir(files);
+        var oldpath = files.photo.filepath;
+        var newpath = 'C:/Users/User/upload/' + files.photo.originalFilename;
+        fs.rename(oldpath, newpath, function (err) {
+            if (err) throw err;
+            res.write('File uploaded and moved!');
+            res.end();
+        });
     });
 });
 
