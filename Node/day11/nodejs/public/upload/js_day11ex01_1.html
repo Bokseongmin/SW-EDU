@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>업로드 파일 미리보기 예제</h1>
+    <!-- 중요 :  method="post" enctype="multipart/form-data" 속성 필수 -->
+    <form id="inputForm" action="/saram/input" method="post" enctype="multipart/form-data">
+        성명: <input type="text" name="name" value="홍길동"><br/>
+        이메일: <input type="text" name="email" value="hong@hong.com"><br/>
+        핸드폰: <input type="text" name="phone" value="010-5555-5555"><br/>
+        사진: <input type="file" multiple name="photo" id="photo" accept="image/gif, image/jpge, image/png"><br/>
+        <input type="submit" value="전송">
+    </form>
+    <div id="preview">사진 미리 보기</div>
+
+    <script>
+        var inputForm = document.querySelector("#inputForm");
+        var preview = document.querySelector("#preview");
+        var photo = document.querySelector("#photo");
+
+        photo.addEventListener("change", (event)=>{
+            let input = event.target;
+            // FileReader - 비동기 형태로 파일을 읽어오는 객체.
+            if(input.files && input.files[0]) {
+                let reader = new FileReader();
+
+                // 파일을 모두 읽으면 
+                reader.addEventListener("load", (e)=> {
+                    let readImg = e.target.result;
+                    preview.innerHTML = `<img src="${readImg}" width="200"/>`;
+                });
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
+</body>
+</html>
