@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEx06SPA</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"
+        integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/template" id="carListTmp">
+        <table width="100%" border="1">
+            <tr>
+                <th>NO</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>COMPANY</th>
+                <th>YEAR</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+<%
+        for(var car of carList) {
+%>
+            <tr>
+                <td><%=car.no %></td>
+                <td><%=car.name %></td>
+                <td><%=car.price %></td>
+                <td><%=car.company %></td>
+                <td><%=car.year %></td>
+                <td><button class="modifyBtn" data-no="<%=car.no %>">수정</button></td>
+                <td><button class="delBtn" data-no="<%=car.no %>">삭제</button></td>
+            </tr>
+<%  
+        } // end of for
+%>
+        </table>
+    </script>
+</head>
+
+<body>
+    <h1>중고 차 매매 쇼핑몰</h1>
+    <form id="carForm">
+        <table>
+            <caption>중고 차 정보 입력</caption>
+            <tr>
+                <th>차종</th>
+                <td><input type="text" name="name" value="SORENTO" /></td>
+            </tr>
+            <tr>
+                <th>가격</th>
+                <td><input type="text" name="price" value="4500" /></td>
+            </tr>
+            <tr>
+                <th>회사</th>
+                <td><input type="text" name="company" value="KIA" /></td>
+            </tr>
+            <tr>
+                <th>연식</th>
+                <td><input type="text" name="year" value="2023" /></td>
+            </tr>
+            <tr>
+                <th> </th>
+                <td><input type="submit" value="저장" /></td>
+            </tr>
+        </table>
+    </form>
+    <div id="carListBox"></div>
+
+    <script>
+        function drawList(carList) {
+            var complie = _.template($("#carListTmp").html());
+            var html = complie({ carList });
+            $("#carListBox").html(html);
+
+            $("button.modifyBtn").on("click", function () {
+                console.log("modify no => ", $(this).data("no"));
+                $.post("/car/modify", { no: $(this).data("no") }, function (data) {
+                    $("#[no=no]").val(data.no);
+                    $("#[price=price]").val(data.price);
+                    $("#company").val(data.company);
+                    $("#year").val(data.year);
+                });
+            });
+
+            $("button.delBtn").on("click", function () {
+                console.log("del no => ", $(this).data("no"));
+                $.post("/car/delete", { no: $(this).data("no") }, function (data, status, xhr) {
+                    drawList(data);
+                });
+            });
+        }
+
+        $(document).ready(function () {
+            $.get("/car", function (data, status, xhr) {
+                if (status === 'success') {
+                    drawList(data);
+                }
+            });
+
+            $("#carForm").on("submit", function (event) {
+                event.preventDefault();
+                var paramData = {
+                    name: $(this.name).val(), //this.name.value
+                    price: $(this.price).val(),
+                    company: $(this.company).val(),
+                    year: $(this.year).val()
+                }
+                console.log(paramData);
+                $.post("/car", paramData, function (data, status, xhr) {
+                    drawList(data);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

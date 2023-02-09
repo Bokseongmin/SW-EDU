@@ -19,33 +19,35 @@ app.use(cors());
 app.use(express.static(__dirname + "/public"));
 
 
-app.get("/", (req, res)=>{
-    res.writeHead(200, {"Content-Type":"text/html; charset=UTF-8"});
+app.get("/", (req, res) => {
+    res.writeHead(200, { "Content-Type": "text/html; charset=UTF-8" });
     res.write("<h1>Hello world</h1>");
     res.end();
 });
 
 
-app.post("/saram/input", (req, res)=>{
+app.post("/saram/input", (req, res) => {
     var form = new formidable.IncomingForm();
-    form.uploadDir = "D:\\";
+    form.uploadDir = "E:\\";
     form.parse(req, function (err, fields, files) {
         console.log(">>>>>> (1) ", fields);
     });
 
-    form.on("end",  function () {
+    form.on("end", function () {
         console.log(">>>>>> (2) ");
         console.log("파일 갯수 : ", this.openedFiles.length);
-        for(var i=0; i<this.openedFiles.length; i++) {
+        for (var i = 0; i < this.openedFiles.length; i++) {
             let file = this.openedFiles[i];
-           //console.dir(file);
+            //console.dir(file);
             var oldpath = file.filepath;
-            var newpath = 'D:\\.SW-EDU\\SW-EDU\\upload\\' + file.originalFilename;
-            fs.rename(oldpath, newpath, function (err) {
-                if (err) throw err;
-                res.write("<h2>upload file received!</h2>");
-                res.end();
-            });
+            var newpath = "E:\\upload\\" + file.originalFilename;
+            if (fs.existsSync(oldpath)) {
+                fs.rename(oldpath, newpath, function (err) {
+                    if (err) throw err;
+                    res.write("<h2>upload file received!</h2>");
+                    res.end();
+                });
+            }
         }
     });
 });
@@ -53,6 +55,6 @@ app.post("/saram/input", (req, res)=>{
 
 // http와 express의 결합 - 같은 port를 공유한다.
 const server = http.createServer(app);
-server.listen(app.get("port"), ()=>{
-    console.log("서버 실행 중 - http://localhost:"+ app.get("port") );
+server.listen(app.get("port"), () => {
+    console.log("서버 실행 중 - http://localhost:" + app.get("port"));
 });

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEx01_2.html</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- 사용자 정의 라이브러리 -->
+    <script src="./frontEx01.js"></script>
+</head>
+<body>
+    <h1>jQuery 사용자 정의 플러그인 만들기</h1>
+
+    <script>
+        $(document).ready(function() {
+            //$("h1").css("color", "red").myPlugin("test plugin").css("background-color", "yellow");
+            $("h1").myPlugin("내가 만든 플러그인 적용!");
+        });
+    </script>
+</body>
+</html>

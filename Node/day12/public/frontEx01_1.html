@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEx01.html</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+    <h1>jQuery 사용자 정의 플러그인 만들기</h1>
+
+    <script>
+        // 사용자 정의 플러그인 추가
+        // jquery CDN보다 아래에 위치 해야 한다.
+        $.fn.myPlugin = function(data) {
+            console.log("Data : " + data);
+            $(this)
+                .text(data)
+                .css({
+                    "color":"green",
+                    "background-color": "pink"
+                });
+            // 메서드 체인이 가능하도록 this를 반환
+            return this;
+        };
+
+        $(document).ready(function() {
+            //$("h1").css("color", "red").myPlugin("test plugin").css("background-color", "yellow");
+            $("h1").myPlugin("내가 만든 플러그인 적용!");
+        });
+    </script>
+</body>
+</html>
