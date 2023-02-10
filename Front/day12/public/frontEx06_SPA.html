@@ -70,6 +70,7 @@
     <div id="carListBox"></div>
 
     <script>
+        var carListArr = [];
         function drawList(carList) {
             var complie = _.template($("#carListTmp").html());
             var html = complie({ carList });
@@ -77,19 +78,15 @@
 
             $("button.modifyBtn").on("click", function () {
                 console.log("modify no => ", $(this).data("no"));
-                $.post("/car/modify", { no: $(this).data("no") }, function (data) {
-                    $("#[no=no]").val(data.no);
-                    $("#[price=price]").val(data.price);
-                    $("#company").val(data.company);
-                    $("#year").val(data.year);
+                let no = parseInt($(this).data("no"));
+                let index = carListArr.findIndex(function(carData) {
+                    return carData.no == no;
                 });
+                // 이하 과제
             });
 
             $("button.delBtn").on("click", function () {
                 console.log("del no => ", $(this).data("no"));
-                $.post("/car/delete", { no: $(this).data("no") }, function (data, status, xhr) {
-                    drawList(data);
-                });
             });
         }
 

@@ -20,9 +20,11 @@
 
     <script>
         $(document).ready(function () {
-            //load() - ajax와 innerHTML 기능이 합쳐진것
+            // load() - ajax와 innerHTML 기능이 합쳐진것
             $("#loadBtn").on("click", function (event) {
-                $("#demo").load("load_data.txt");
+                $('#demo').load("load_data.txt", function(res, status, xhr) {
+                    console.log(res,status,xhr)
+                }); // 덮어쓰기
             });
         });
     </script>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>사진 업로드</title>
+
+        <link rel="stylesheet" href="../css/index.css" />
+        <link rel="stylesheet" href="../css/indexbtn.css" />
+        <script src="http://code.jquery.com/jquery.js"></script>
+    </head>
+    <body>
+        <h1>업로드 파일 미리보기 예제</h1>
+
+        <!-- 사진 업로드 시 속성 중요!! -->
+        <form id="inputForm" method="post" enctype="multipart/form-data">
+            사용자: <input type="text" name="user" value="박준수" /><br /><br />
+            이메일:
+            <input
+                type="email"
+                name="email"
+                value="pjs@saram.com"
+            /><br /><br />
+            핸드폰:
+            <input type="text" name="phone" value="01001010000" /><br /><br />
+            파일 선택:
+            <input
+                type="file"
+                multiple
+                name="photoinput"
+                id="photo"
+                accept="image/gif, image/jpg, image/png"
+            />
+            <div class="insert file-list"></div>
+            <br />
+            <input type="submit" value="전송" />
+        </form>
+        <br />
+
+        <div id="preview" class="slider">
+            사진 미리 보기
+            <br />
+            <div class="slides"></div>
+        </div>
+
+        <script>
+            var inputForm = document.querySelector("#inputForm")
+            var preview = document.querySelector("#preview")
+            var photo = document.querySelector("#photo")
+            var slides = document.querySelector(".slides")
+            var slider = document.querySelector(".slider")
+            var fileList = document.querySelector(".file-list")
+
+            let htmlData = ""
+            var filesArr = []
+
+            inputForm.addEventListener("submit", (event) => {
+                event.preventDefault()
+                let xhr = new XMLHttpRequest()
+                let formData = new FormData(inputForm)
+                xhr.onload = (e) => {
+                    let res = event.target.responseText
+                    console.log("업로드 완료!", res)
+                }
+                xhr.open("POST", "/saram/input", true)
+                // xhr.setRequestHeader("Content-type", "multipart/form-data")
+
+                // 파일 전송이 아닌 Post 전송일 경우에는  다음과 같이 사용해야 함
+                // xhr.setRequestHeader("content-type", "application/~~~")
+                xhr.send(formData)
+            })
+
+            function deleteFile(num) {
+                document.querySelector("#file" + num).remove()
+                filesArr[num].is_delete = true
+            }
+
+            photo.addEventListener("change", (event) => {
+                let input = event.target
+                // FileReader - 비동기 형태로 파일을 읽어오는 객체.
+                preview.innerHTML = ""
+                slides.innerHTML = ""
+                fileList.innerHTML = ""
+
+                var cnt = 1
+                var c = 1
+                for (const file of input.files) {
+                    // for (var i = 0; i < input.files.length; i++) {
+                    //     if (input.files && input.files[i]) {
+                    if (file) {
+                        let reader = new FileReader()
+                        // 파일을 모두 읽으면
+                        reader.addEventListener("load", (e) => {
+                            filesArr.push(file)
+                            let readImg = e.target.result
+                            htmlData = ""
+                            htmlData +=
+                                '<div id="file' + cnt + '" class="filebox">'
+                            htmlData +=
+                                '   <p class="name">' + file.name + "</p>"
+                            htmlData +=
+                                '   <a class="delete" onclick="deleteFile(' +
+                                cnt +
+                                ');"><i class="far fa-minus-square"></i></a>'
+                            htmlData += "</div>"
+                            $(".file-list").append(htmlData)
+                            slides.innerHTML += `<div><img src="${readImg}" id='slide-${cnt}' width="400" alt="" /><div class="circCont">
+                                <button
+                                    class="circle fromMiddle cancelBtn"
+                                    id='btn${cnt}'
+                                    data-animation="magnify"
+                                    data-remove="3000"
+                                >
+                                    <span></span>
+                                </button>
+                            </div></div>`
+                            cnt++
+                        })
+                        reader.readAsDataURL(file)
+                    }
+                    slider.innerHTML += `<a href="#slide-${c}">${c}</a>`
+                    c++
+                }
+                preview.appendChild(slides)
+            })
+        </script>
+    </body>
+</html>

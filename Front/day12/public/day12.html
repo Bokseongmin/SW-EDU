@@ -70,22 +70,38 @@
     <div id="carListBox"></div>
 
     <script>
+        var carListArr = [];
+        var edit = false;
+        var no;
+
         function drawList(carList) {
+            carListArr = carList;
             var complie = _.template($("#carListTmp").html());
             var html = complie({ carList });
+
             $("#carListBox").html(html);
 
-            $("button.modifyBtn").on("click", function () {
-                console.log("modify no => ", $(this).data("no"));
-                let modifyObj = {};
-                $.post("/car/delete", paramData, function (data, status, xhr) {
-                    drawList(data);
+            $("button.modifyBtn").click(function () {
+                edit = true;
+                console.log("del no => ", $(this).data("no"));
+                no = parseInt($(this).data("no"));
+                let index = carListArr.findIndex(function (carData) {
+                    return carData.no == no;
                 });
+                // 이하 과제
+                $("input[name=name]").val(carListArr[index].name);
+                $("input[name=price]").val(carListArr[index].price);
+                $("input[name=company]").val(carListArr[index].company);
+                $("input[name=year]").val(carListArr[index].year);
             });
 
             $("button.delBtn").on("click", function () {
-                console.log("del no => ", $(this).data("no"));
-                $.post("/car/delete", { no : $(this).data("no")}, function (data, status, xhr) {
+                no = parseInt($(this).data("no"));
+                let index = carListArr.findIndex(function (carData) {
+                    return carData.no == no;
+                });
+                console.log("del no => ", index);
+                $.post("/car/delete", { no: index }, function (data, status, xhr) {
                     drawList(data);
                 });
             });
@@ -98,17 +114,25 @@
                 }
             });
 
-            $("#carForm").on("submit", function (event) {
+            $("#carForm").submit(function (event) {
                 event.preventDefault();
-                var paramData = {
-                    name: $(this.name).val(), //this.name.value
-                    price: $(this.price).val(),
-                    company: $(this.company).val(),
-                    year: $(this.year).val()
+                let url = "/car";
+
+                let paramData = {
+                    name: $("input[name=name]").val(),
+                    price: $("input[name=price]").val(),
+                    company: $("input[name=company]").val(),
+                    year: $("input[name=year]").val()
+                };
+
+                if (edit) {
+                    paramData.no = no;
+                    url = "/car/modify";
                 }
-                console.log(paramData);
-                $.post("/car", paramData, function (data, status, xhr) {
+
+                $.post(url, paramData, function (data, status, xhr) {
                     drawList(data);
+                    edit = false;
                 });
             });
         });
