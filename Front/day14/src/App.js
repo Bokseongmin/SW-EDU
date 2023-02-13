@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import "./App.css";
 
 function ItemRow({ item, removeItem, changeCheck }) {
-    const textDeco = { textDecoration : item.done ? "line-through" : "none"}
+    const textDeco = { textDecoration: item.done ? "line-through" : "none" }
     return (
         <li>
             <p>
                 <input type="checkbox" checked={item.done} onChange={(e) => {
                     changeCheck(e, item);
                 }} />
-                <input type="text" value={item.title} disabled style={textDeco}/>
+                <input type="text" value={item.title} disabled style={textDeco} />
                 <button onClick={(e) => {
                     removeItem(item.no);
                 }}>삭제</button>
@@ -58,17 +58,39 @@ function TodoList({ todoList, removeItem, changeCheck }) {
 function App(props) {
     // 과제1 : 취소선 기능 추가
     // 과제2 : todoList 데이터를 localStorage에 저장.
+    /*
     const [todoList, setTodoList] = useState([
         { no: 1, title: "점심", done: false },
         { no: 2, title: "산책", done: false },
         { no: 3, title: "복습", done: false },
         { no: 4, title: "예습", done: false },
     ]);
+    */
+   
     const [noCount, setNoCount] = useState(5);
+    const [todoList, setTodoList] = useState(() => {
+        const storedList = localStorage.getItem("todoList");
+        if (storedList) {
+            const parsedList = JSON.parse(storedList);
+            const noNum = parsedList.length > 0 ? parsedList[parsedList.length - 1].no + 1 : 0;
+            setNoCount(noNum);
+            return parsedList;
+        } else {
+            return [
+                { no: 1, title: "점심", done: false },
+                { no: 2, title: "산책", done: false },
+                { no: 3, title: "복습", done: false },
+                { no: 4, title: "예습", done: false },
+            ];
+        }
+    });
 
     function appendItem(newItem) {
-        setTodoList([...todoList, { no: noCount, title: newItem, done: false }]);
+        const newObj = { no: noCount, title: newItem, done: false };
+        setTodoList([...todoList, newObj]);
         setNoCount(noCount + 1);
+        localStorage.setItem("todoList", JSON.stringify([...todoList, newObj]));
+        
     }
 
     function removeItem(no) {
@@ -76,6 +98,7 @@ function App(props) {
             return item.no != no;
         });
         setTodoList(newList);
+        localStorage.setItem("todoList", JSON.stringify(newList));
     }
 
     function changeCheck(e, item) {
@@ -86,13 +109,14 @@ function App(props) {
             return todo;
         });
         setTodoList(newTodoList);
+        localStorage.setItem("todoList", JSON.stringify(newTodoList));
     }
     return (
         <>
             <h1>Todo List</h1>
             <InputItem appendItem={appendItem} />
             <hr />
-            <TodoList todoList={todoList} removeItem={removeItem} changeCheck={changeCheck}/>
+            <TodoList todoList={todoList} removeItem={removeItem} changeCheck={changeCheck} />
         </>
     );
 }
