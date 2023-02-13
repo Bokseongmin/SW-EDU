@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cheerio/0.22.0/index.js" integrity="sha512-+obmGUxyA+OfXW4RU7Ez2JBbCFy+dmZatW/Z5u/PDZlY+SKzAMSHzpNfTDohw7RFfW+zmLrI9h19XiODWZRO5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <h1>리액트 공부하기</h1>
+    <script>
+        
+        // axios가 잘 되는가?
+        let getUrlVal = "http://localhost:5000/axios_get";
+        axios.get(getUrlVal, {}, {withCredentials: true}).then((response)=>{
+            console.log(response.data);
+        });
+        
+    </script>
+</body>
+</html>
