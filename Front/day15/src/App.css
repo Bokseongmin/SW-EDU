@@ -1,0 +1,10 @@
+input[disabled] {
+    /* 속성에 disabled 가 있으면 */
+    border: 1px;
+    background-color: white;
+
+}
+
+input.done {
+    text-decoration: line-through;
+}
