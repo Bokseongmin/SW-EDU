@@ -17,15 +17,11 @@ console.log(process.env.PORT || 3001); // 3항 연산자의 줄임 표현
 app.use(express.json()); // application/json
 app.use(express.urlencoded({ extended: true }));// application/x-www-form-urlencoded 
 
-//static 미들웨어 설정 - express에 내장
-app.use(express.static(__dirname + "/public"));
-
 const todoList = [
     { idx: 1, title: "hello", done: false },
     { idx: 2, title: "world", done: false },
     { idx: 3, title: "node 공부", done: false }
 ];
-let seqTodoList = 4;
 
 // 특정 패스 요청 처리 app.get()
 app.get('/home', (req, res) => {
@@ -51,26 +47,8 @@ app.post("/todoList", (req, res) => {
     // post방식에서 피라미터 받기 - bodyParser미들웨어 사용
     // express.json(), express.urlencoded() 미들위어로 설정
     var newItem = req.body.newItem;
-    todoList.push({ idx: seqTodoList++, title: newItem, done: false });
     console.log("newItem : " + newItem);
     // 저장 후 목록 갱신...
-    res.redirect("/todoList");
-});
-
-app.get("/todoList/update", (req, res) => {
-    console.log("GET - /todoList/update");
-    let idx = req.query.idx;
-    let title = req.query.title;
-
-    // index를 찾는다.
-    // 해당 요소의 title을 변경.
-    let index = todoList.findIndex((item, i) => {
-        return item.idx == idx;
-    });
-    // 유효성 체크
-    if(index != -1) {
-        todoList[index].title = title;
-    }
     res.redirect("/todoList");
 });
 

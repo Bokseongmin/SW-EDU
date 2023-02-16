@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>할 일 목록</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <style>
+        td.showInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>할 일 목록</h1>
+    <div>
+        <form action="/todoList" method="post">
+            <input type="text" value="새 할일" name="newItem">
+            <input type="submit" value="저장">
+        </form>
+    </div>
+    <table width="100%">
+        <tr>
+            <th width="10%">번호</th>
+            <th width="10%">체크</th>
+            <th width="60%">할일</th>
+            <th width="10%">수정</th>
+            <th width="10%">삭제</th>
+        </tr>
+    <%
+        for(var todo of todoList) {
+    %>
+        <tr>
+            <td><%=todo.idx %></td>
+            <td><input type="checkbox"></td>
+            <td class="showTitle "><%=todo.title %></td>
+            <td class="showInput"><input value="<%=todo.title %>"/></td>
+            <td><button class="modifyBtn" data-idx="<%=todo.idx %>">수정</button></td>
+            <td><button class="delBtn" data-idx="<%=todo.idx %>">삭제</button></td>
+        </tr>
+    <%  } // end of for %>
+    </table>
+
+    <script>
+        $("button.modifyBtn").click(function() {
+            const row = $(this).parent().parent();
+            if(row.find("td.showTitle").css("display")!=="none"){
+                row.find("td.showTitle").hide();
+                row.find("td.showInput").show();
+                $(this).text("완료");
+            } else {
+                // 서버로 변경 내용과 idx를 보낸다.
+                // 페이지가 변경 되면서 Query String으로 파라미터 전송.
+                // 주소/todoList/update?idx=2&title=수정합니다.
+                let title = row.find("td.showInput>input").val();
+                let idx = $(this).data("idx");
+                let urlStr = `/todoList/update?idx=${idx}&title=${title}`;
+                location.assign(urlStr);
+                //row.find("td.showTitle").show();
+                //row.find("td.showInput").hide();
+                //$(this).text("수정");
+            }
+        });
+
+        $("button.delBtn").click(function () {
+            let idx = $(this).data("idx");
+            let urlStr = `/todoList/delete?idx=${idx}`;
+            location.assign(urlStr);
+        });
+    </script>
+</body>
+</html>

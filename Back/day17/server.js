@@ -37,10 +37,7 @@ app.get('/home', (req, res) => {
 // GET 요청 방식에서 처리
 app.get("/todoList", (req, res) => {
     req.app.render("todoList", { todoList }, (err, data) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
+        if (err) throw err;
         res.end(data);
     });
 });
@@ -52,13 +49,12 @@ app.post("/todoList", (req, res) => {
     // express.json(), express.urlencoded() 미들위어로 설정
     var newItem = req.body.newItem;
     todoList.push({ idx: seqTodoList++, title: newItem, done: false });
-    console.log("newItem : " + newItem);
     // 저장 후 목록 갱신...
     res.redirect("/todoList");
 });
 
 app.get("/todoList/update", (req, res) => {
-    console.log("GET - /todoList/update");
+    console.log("GET - /todoList/update >>> " + req.query.idx);
     let idx = req.query.idx;
     let title = req.query.title;
 
@@ -68,8 +64,21 @@ app.get("/todoList/update", (req, res) => {
         return item.idx == idx;
     });
     // 유효성 체크
-    if(index != -1) {
+    if (index != -1) {
         todoList[index].title = title;
+    }
+    res.redirect("/todoList");
+});
+
+app.get("/todoList/delete", (req, res) => {
+    console.log("GET - /todoList/delete >>> " + req.query.idx);
+    let idx = req.query.idx;
+
+    let index = todoList.findIndex((item, i)=>{
+        return item.idx == idx;
+    })
+    if(index != -1) {
+        todoList.splice(index, 1);
     }
     res.redirect("/todoList");
 });
