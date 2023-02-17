@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +11,13 @@
         td.showInput {
             display: none;
         }
+
+        .done {
+            text-decoration: line-through;
+        }
     </style>
 </head>
+
 <body>
     <h1>할 일 목록</h1>
     <div>
@@ -28,38 +34,40 @@
             <th width="10%">수정</th>
             <th width="10%">삭제</th>
         </tr>
-    <%
-        for(var todo of todoList) {
-    %>
-        <tr>
-            <td><%=todo.idx %></td>
-            <td><input type="checkbox"></td>
-            <td class="showTitle "><%=todo.title %></td>
-            <td class="showInput"><input value="<%=todo.title %>"/></td>
-            <td><button class="modifyBtn" data-idx="<%=todo.idx %>">수정</button></td>
-            <td><button class="delBtn" data-idx="<%=todo.idx %>">삭제</button></td>
-        </tr>
-    <%  } // end of for %>
+        <% for(var todo of todoList) { %>
+            <tr>
+                <td>
+                    <%=todo.idx %>
+                </td>
+                <td><input class="chk" type="checkbox" data-idx="<%=todo.idx %>" <%= todo.done ? 'checked' : '' %>></td>
+                <td class="showTitle <%= todo.done ? 'done' : '' %>">
+                    <%=todo.title %>
+                </td>
+                <td class="showInput"><input value="<%=todo.title %>" /></td>
+                <td><button class="modifyBtn" data-idx="<%=todo.idx %>">수정</button></td>
+                <td><button class="delBtn" data-idx="<%=todo.idx %>">삭제</button></td>
+            </tr>
+            <% } %>
     </table>
 
     <script>
-        $("button.modifyBtn").click(function() {
+        $("input.chk").change(function () {
+            const idx = $(this).data("idx");
+            let urlStr = `/todoList/chk?idx=${idx}`;
+            location.assign(urlStr);
+        });
+
+        $("button.modifyBtn").click(function () {
             const row = $(this).parent().parent();
-            if(row.find("td.showTitle").css("display")!=="none"){
+            if (row.find("td.showTitle").css("display") !== "none") {
                 row.find("td.showTitle").hide();
                 row.find("td.showInput").show();
                 $(this).text("완료");
             } else {
-                // 서버로 변경 내용과 idx를 보낸다.
-                // 페이지가 변경 되면서 Query String으로 파라미터 전송.
-                // 주소/todoList/update?idx=2&title=수정합니다.
                 let title = row.find("td.showInput>input").val();
                 let idx = $(this).data("idx");
                 let urlStr = `/todoList/update?idx=${idx}&title=${title}`;
                 location.assign(urlStr);
-                //row.find("td.showTitle").show();
-                //row.find("td.showInput").hide();
-                //$(this).text("수정");
             }
         });
 
@@ -70,4 +78,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <title>Document</title>
+    <style>
+        td.showInput {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>차량 등록</h1>
+    <a href="/car">돌아가기</a>
+    <div>
+        <form action="/addCar" method="post">
+            회사 : <input type="text" value="" name="company"> <br />
+            차량 : <input type="text" value="" name="title"> <br />
+            연식 : <input type="text" value="" name="year"> <br />
+            가격 : <input type="text" value="" name="price"> <br />
+            <input type="submit" value="저장">
+        </form>
+    </div>
+    <h1>차량 목록</h1>
+    <table width="100%">
+        <tr>
+            <th width="10%">번호</th>
+            <th width="20%">회사</th>
+            <th width="20%">차량명</th>
+            <th width="10%">연식</th>
+            <th width="10%">가격</th>
+            <th width="10%">상태</th>
+            <th width="10%">수정</th>
+            <th width="10%">삭제</th>
+        </tr>
+        <% for(var car of carList) { %>
+            <tr>
+                <td>
+                    <%=car.no %>
+                </td>
+                <td class="showTitle">
+                    <%=car.company %>
+                </td>
+                <td class="showInput"><input name="company" value="<%=car.company %>" /></td>
+                <td class="showTitle">
+                    <%=car.title %>
+                </td>
+                <td class="showInput"><input name="title" value="<%=car.title %>" /></td>
+                <td class="showTitle">
+                    <%=car.year %>
+                </td>
+                <td class="showInput"><input name="year" value="<%=car.year %>" /></td>
+                <td class="showTitle">
+                    <%=car.price %>
+                </td>
+                <td class="showInput"><input name="price" value="<%=car.price %>" /></td>
+                <td>
+                    <select class="state" name="state" data-no="<%=car.no %>">
+                        <option value="대기중" <%=car.state==="대기중" ? "selected" : "" %>>대기중</option>
+                        <option value="예약중" <%=car.state==="예약중" ? "selected" : "" %>>예약중</option>
+                        <option value="판매완료" <%=car.state==="판매완료" ? "selected" : "" %>>판매완료</option>
+                    </select>
+                </td>
+                <td><button class="modifyBtn" data-no="<%=car.no %>">수정</button></td>
+                <td><button class="delBtn" data-no="<%=car.no %>">삭제</button></td>
+            </tr>
+            <% } %>
+    </table>
+    <script>
+        $("button.modifyBtn").click(function () {
+            const row = $(this).parent().parent();
+            if (row.find("td.showTitle").css("display") !== "none") {
+                row.find("td.showTitle").hide();
+                row.find("td.showInput").show();
+                $(this).text("완료");
+            } else {
+                let company = row.find("td.showInput>input[name=company]").val();
+                let title = row.find("td.showInput>input[name=title]").val();
+                let year = row.find("td.showInput>input[name=year]").val();
+                let price = row.find("td.showInput>input[name=price]").val();
+
+                let no = $(this).data("no");
+                let urlStr = `/addCar/modify?no=${no}&company=${company}&title=${title}&year=${year}&price=${price}`;
+                location.assign(urlStr);
+            }
+        });
+
+        $("button.delBtn").click(function () {
+            let no = $(this).data("no");
+            let urlStr = `/addCar/delete?no=${no}`;
+            location.assign(urlStr);
+        });
+
+        $("select.state").change(function () {
+            const no = $(this).data("no");
+            const state = $(this).val();
+
+            let urlStr = `/addCar/state?no=${no}&state=${state}`;
+            location.assign(urlStr);
+        });
+
+    </script>
+</body>
+
+</html>
