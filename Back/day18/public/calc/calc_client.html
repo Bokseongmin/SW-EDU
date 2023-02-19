@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>node.js를 활용한 계산기 구현(REST방식)</h1>
+    <form>
+        <input type="text" name="a" size="4">
+        <input type="text" name="b" size="4">
+        <select name="op">
+            <option value="GET">plus</option>
+            <option value="POST">minus</option>
+            <option value="PUT">mult</option>
+            <option value="DELETE">div</option>
+        </select>
+        <input type="submit" value="result">
+    </form>
+    <div id="result"></div>
+    
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+        $("form").submit(function(e) {
+            e.preventDefault();
+            let a = this.a.value;
+            let b = this.b.value;
+            let method = this.op.value;
+            let calcUrl = `http://localhost:3000/calc/${a}/${b}`;
+            //console.log(method, calcUrl);
+            $.ajax({
+                url: calcUrl,
+                method: method,
+                dataType: "text",
+                success: function (data) {
+                    console.log(data);
+                    $("div#result").text(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

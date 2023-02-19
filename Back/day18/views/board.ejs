@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        #preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        tr th, td{
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-5 mt-5">
+                <form action="/board" method="post" enctype="multipart/form-data">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>아이디</th>
+                                <th><input type="text" class="form-control" name="id"></th>
+                                <th>
+                                    <div>미리보기</div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>성명</th>
+                                <th><input type="text" class="form-control" name="name"></th>
+                                <th rowspan="3" class="align-middle">
+                                    <div id="preview"></div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <th><input type="text" class="form-control" name="email"></th>
+                            </tr>
+                            <tr>
+                                <th>사진</th>
+                                <th><input type="file" class="form-control" accept="image/gif, image/jpeg, image/png"
+                                        name="pic" id="pic" multiple="false" max="1"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="3"><input type="submit" class="form-control" value="저장"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="10%">번호</th>
+                            <th width="20%">아이디</th>
+                            <th width="20%">성명</th>
+                            <th width="20%">이메일</th>
+                            <th width="20%">사진</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var board of boardList) { %>
+                            <tr>
+                                <td><%= board.no %></td>
+                                <td><%= board.id %></td>
+                                <td><%= board.name %></td>
+                                <td><%= board.email %></td>
+                                <td><img src="<%= board.pic %>" width="100px"></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var preview = document.querySelector("#preview");
+    var pic = document.querySelector("#pic");
+    pic.addEventListener("change", (event) => {
+        let input = event.target;
+        var _files = input.files[0];
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.addEventListener("load", (e) => {
+                let readImg = e.target.result;
+                preview.innerHTML = `<img src="${readImg}" data-index="${_files.lastModified}" id="uploadImg" width="100"/>`;
+            });
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+</script>
+
+</html>

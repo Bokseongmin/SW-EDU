@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>POST요청</legend>
+        <form action="/board/kim/programmer" method="post">
+            <input type="text" value="post요청" name="data">
+            <input type="submit" value="요청">
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>PUT요청</legend>
+        <form action="/board" method="put">
+            <input type="text" value="put요청" name="data">
+            <input type="submit" value="요청">
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>DELETE요청</legend>
+        <form action="/board" method="delete">
+            <input type="text" value="delete요청" name="data">
+            <input type="submit" value="요청">
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>GET요청</legend>
+        <form action="/board" method="get">
+            <input type="text" value="get요청" name="data">
+            <input type="submit" value="요청">
+        </form>
+    </fieldset>
+    <hr />
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+        function putRequest() {
+            $.ajax({
+                url: "/board",
+                method: "PUT",
+                data: { val1: "aaa", val2: "aaa2" },
+                dataType: "text",
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+        function deleteRequest() {
+            $.ajax({
+                url: "/board",
+                method: "DELETE",
+                data: { val1: "ddd", val2: "ddd2" },
+                dataType: "text",
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+    </script>
+    <button onclick="javascript:putRequest()">Ajax PUT 요청</button>
+    <button onclick="javascript:deleteRequest()">Ajax DELETE 요청</button>
+
+</html>

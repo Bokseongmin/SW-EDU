@@ -1,4 +1,8 @@
 {
     "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 600
+    "files.autoSaveDelay": 600,
+    "[yaml]": {
+    },
+    "[dockercompose]": {
+    }
 }
