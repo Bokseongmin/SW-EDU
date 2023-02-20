@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        canvas {
+            border: solid 1px black;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 d-flex justify-content-center align-items-center mb-5 mt-5">
+                <canvas id="canvas" width="500px" height="500px"></canvas>
+            </div>
+            <div class="col-md-3 d-flex justify-content-start flex-column mb-5 mt-5">
+                <button class="btn btn-danger mb-2" id="redBtn">RED</button>
+                <button class="btn btn-success mb-2" id="greenBtn">GREEN</button>
+                <button class="btn btn-primary mb-2" id="blueBtn">BLUE</button>
+                <button class="btn btn-dark mb-2" id="blackBtn">BLACK</button>
+                <button class="btn btn-light mb-2" id="whiteBtn">WHITE</button>
+                <div class="mt-auto">
+                    <button class="btn btn-warning mb-2" id="clearBtn">전체 지우기</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center mb-5">
+                <button class="btn btn-primary mx-2" id="connectBtn">연결하기</button>
+                <button class="btn btn-danger mx-2" id="closeBtn">접속 해제</button>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = null;
+        var drawColor = "white";
+        function connection() {
+            socket = io.connect("http://localhost:3000");
+            socket.on("connect", function () {
+                console.log("socket server에 연결 됨.");
+
+                var canvas = $("#canvas")[0];
+                var context = canvas.getContext("2d");
+
+                var drawing = false;
+                var lastX, lastY;
+
+                $(canvas).on("mousedown", function (e) {
+                    if (drawing) return;
+                    drawing = true;
+                    lastX = e.clientX - canvas.offsetLeft;
+                    lastY = e.clientY - canvas.offsetTop;
+                });
+
+                $(canvas).on("mousemove", function (e) {
+                    if (drawing) {
+                        var _X = e.clientX - canvas.offsetLeft;
+                        var _Y = e.clientY - canvas.offsetTop;
+
+                        context.beginPath();
+                        context.moveTo(lastX, lastY);
+                        context.lineTo(_X, _Y);
+                        context.strokeStyle = drawColor;
+                        context.lineWidth = 2;
+                        context.stroke();
+
+                        socket.emit("draw", { x: _X, y: _Y, color: drawColor });
+                    }
+                });
+
+                $(canvas).on("mouseup", function () {
+                    lastX = null;
+                    lastY = null;
+                    drawing = false;
+                });
+
+                $("#clearBtn").click(function (e) {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    socket.emit("clear");
+                });
+
+                // 서버에서 보낸 메세지 받아보기
+                socket.on("draw", function (data) {
+                    if (lastX !== null && lastY !== null) {
+                        context.beginPath();
+                        context.moveTo(lastX, lastY);
+                        context.lineTo(data.x, data.y);
+                        context.strokeStyle = data.color;
+                        context.lineWidth = 2;
+                        context.stroke();
+                    }
+                    lastX = data.x;
+                    lastY = data.y;
+                });
+
+                socket.on("clear", function (data) {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                });
+            });
+        }
+
+        $("#redBtn").click(function (e) {
+            drawColor = "red";
+        });
+
+        $("#greenBtn").click(function (e) {
+            drawColor = "green";
+        });
+
+        $("#blueBtn").click(function (e) {
+            drawColor = "blue";
+        });
+
+        $("#blackBtn").click(function (e) {
+            drawColor = "black";
+        });
+
+        $("#whiteBtn").click(function (e) {
+            drawColor = "white";
+        });
+
+        $("#connectBtn").click(function (e) {
+            connection();
+        });
+
+        $("#closeBtn").click(function (e) {
+            if (socket) {
+                socket.close();
+                $(canvas).off("mousemove");
+            }
+        });
+    </script>
+</body>
+
+</html>
