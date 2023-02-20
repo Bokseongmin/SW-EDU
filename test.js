@@ -1,14 +1,9 @@
-router.route("/fileupload").post((req, res) => {
-    var form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields, files) {
-        var oldpath = files.filetoupload.filepath;
-        var newpath = __dirname + "/upload/" + files.filetoupload.originalFilename;
-        fs.rename(oldpath, newpath, function (err) {
-            if (err) throw err;
-            res.writeHead(200, { "Content-Type": "text/html; charset=UTF-8" });
-            res.write("<h3>File uploaded and moved!</h3>");
-            res.write(`<img src="/upload/${files.filetoupload.originalFilename}"/>`);
-            res.end();
-        });
-    });
-})
+var http = require('http');
+var express = require('express');
+var app = express()
+var socketio = require('socket.io');
+var cors = require('cors');
+var static = require('serve-static');
+var path = require('path');
+var config = require('./config/config')
+app.use(cors());

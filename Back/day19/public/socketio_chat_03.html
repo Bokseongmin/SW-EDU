@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        //var socket = io.connect("http://localhost:3000");
+        var chatsocket = io.connect("http://localhost:3000/chat");
+        var newsocket = io.connect("http://localhost:3000/news");
+
+        // 서버에서 보낸 메세지 받아보기
+        chatsocket.on("connect", function(data) {
+            console.log("chat socket 연결 됨.");
+            chatsocket.on("chat message", function(data) {
+                console.log(data);
+            });
+        });
+
+        newsocket.on("connect", function(data) {
+            console.log("news socket 연결 됨.");
+            chatsocket.on("news message", function(data) {
+                console.log(data);
+            });
+        });
+    </script>
+</body>
+</html>

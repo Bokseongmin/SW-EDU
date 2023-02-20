@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+    <h1>Ajax를 이용한 Chat</h1>
+    <form>
+        <div id="box" style="width:300px;height:300px;border:1px solid red;overflow:scroll;"></div>
+        사용자: <input type="text" name="sender"><br>
+        메세지: <input type="text" name="message">
+        <input type="submit" value="전송">
+    </form>
+    <script>
+        var size = 0;
+        setInterval(function () {
+            var url = "http://localhost:3000/recieve?size=" + size;
+            var xhr = new XMLHttpRequest();
+            //console.log(xhr);
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200 && this.responseText != "") {
+                    var data = this.responseText;
+                    var obj = JSON.parse(this.responseText);
+                    var messages = obj.messages;
+                    var rows = $("#box").html();
+                    for (var i = 0; i < messages.length; i++) {
+                        rows += (messages[i].sender + ": " + messages[i].message + "<br>");
+                    }
+                    $("#box").html(rows);
+                    size = Number(obj.total);
+                }
+            }
+            xhr.open("get", url, true);
+            xhr.send();
+        }, 500);
+        $('form').submit(function () {
+            event.preventDefault();
+            var sender = $(':input[name=sender]').val();
+            var message = $(':input[name=message]').val();
+            var url = "http://localhost:3000/send?sender=" + sender + "&message=" + message;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () { }
+            xhr.open("get", url, true);
+            xhr.send();
+        });
+    </script>
+</body>
+
+</html>
