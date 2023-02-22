@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Page</title>
+  </head>
+  <body>
+    <% if (name) { %>
+      <p>Welcome <%= name %>!</p>
+    <% } else { %>
+      <p>Welcome guest!</p>
+    <% } %>
+    <ul>
+      <% carList.forEach(function(car) { %>
+        <li><%= car.make %> <%= car.model %></li>
+      <% }); %>
+    </ul>
+  </body>
+</html>
