@@ -70,17 +70,6 @@ router.route("/logout").get(async (req, res) => {
     res.redirect('/login.html');
 });
 
-router.route("/register").get(async (req, res) => {
-    console.log("GET /register");
-    const userName = req.body.userName;
-    const userId = req.body.userId;
-    const passwd = req.body.passwd;
-
-    if(localDB) {
-        let user
-    }
-});
-
 router.route("/product").get(async (req, res) => {
     res.writeHead(200, { "Content-Type": "text/html; charset=utf8" });
     res.write("<h1>product page!</h1>");
